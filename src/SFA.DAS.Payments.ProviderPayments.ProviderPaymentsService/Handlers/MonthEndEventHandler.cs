@@ -1,14 +1,14 @@
-﻿using ESFA.DC.Logging.Interfaces;
+﻿using System;
+using System.Threading.Tasks;
+using ESFA.DC.Logging.Interfaces;
+using Microsoft.EntityFrameworkCore.Internal;
 using NServiceBus;
 using SFA.DAS.Payments.Application.Infrastructure.Logging;
 using SFA.DAS.Payments.ProviderPayments.Application.Services;
-using SFA.DAS.Payments.ProviderPayments.Messages.Internal.Commands;
-using System;
-using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore.Internal;
 using SFA.DAS.Payments.ProviderPayments.Messages.Commands;
+using SFA.DAS.Payments.ProviderPayments.Messages.Internal.Commands;
 
-namespace SFA.DAS.Payments.ProviderPayments.ProviderPaymentsProxyService.Handlers
+namespace SFA.DAS.Payments.ProviderPayments.ProviderPaymentsService.Handlers
 {
     public class MonthEndEventHandler : IHandleMessages<PerformMonthEndProcessingCommand>
     {
@@ -34,8 +34,7 @@ namespace SFA.DAS.Payments.ProviderPayments.ProviderPaymentsProxyService.Handler
 
             try
             {
-                var monthEndUkprns = await monthEndEventHandlerService.GetMonthEndUkprns(message.CollectionPeriod.Name);
-
+                var monthEndUkprns = await monthEndEventHandlerService.GetMonthEndUkprns(message.CollectionPeriod);
                 if (monthEndUkprns == null || !monthEndUkprns.Any())
                 {
                     paymentLogger.LogWarning("No Provider Ukprn found for month end payment");
@@ -48,12 +47,10 @@ namespace SFA.DAS.Payments.ProviderPayments.ProviderPaymentsProxyService.Handler
                     {
                         Ukprn = ukprn,
                         JobId = message.JobId,
-                        CollectionPeriod = message.CollectionPeriod.Clone()
+                        CollectionPeriod = message.CollectionPeriod
                     });
                 }
-
                 paymentLogger.LogInfo($"Successfully processed Month End Event for Job Id {message.JobId} and Message Type {message.GetType().Name}");
-
             }
             catch (Exception ex)
             {
