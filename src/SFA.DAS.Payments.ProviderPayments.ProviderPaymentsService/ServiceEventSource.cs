@@ -1,15 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics.Tracing;
 using System.Fabric;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.ServiceFabric.Services.Runtime;
 
-namespace SFA.DAS.Payments.ProviderPayments.ProviderPaymentsProxyService
+namespace SFA.DAS.Payments.ProviderPayments.ProviderPaymentsService
 {
-    [EventSource(Name = "MyCompany-SFA.DAS.Payments.ProviderPayments.ServiceFabric-SFA.DAS.Payments.ProviderPayments.ProviderPaymentsProxyService")]
+    [EventSource(Name = "MyCompany-SFA.DAS.Payments.ProviderPayments.ServiceFabric-SFA.DAS.Payments.ProviderPayments.ProviderPaymentsService")]
     internal sealed class ServiceEventSource : EventSource
     {
         public static readonly ServiceEventSource Current = new ServiceEventSource();
@@ -58,7 +53,7 @@ namespace SFA.DAS.Payments.ProviderPayments.ProviderPaymentsProxyService
         }
 
         [NonEvent]
-        public void ServiceMessage(StatelessServiceContext serviceContext, string message, params object[] args)
+        public void ServiceMessage(StatefulServiceContext serviceContext, string message, params object[] args)
         {
             if (this.IsEnabled())
             {
@@ -66,7 +61,7 @@ namespace SFA.DAS.Payments.ProviderPayments.ProviderPaymentsProxyService
                 ServiceMessage(
                     serviceContext.ServiceName.ToString(),
                     serviceContext.ServiceTypeName,
-                    serviceContext.InstanceId,
+                    serviceContext.ReplicaId,
                     serviceContext.PartitionId,
                     serviceContext.CodePackageActivationContext.ApplicationName,
                     serviceContext.CodePackageActivationContext.ApplicationTypeName,
