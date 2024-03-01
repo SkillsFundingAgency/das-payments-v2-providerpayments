@@ -13,19 +13,19 @@
     <PackageReference Include="Microsoft.ApplicationInsights.ServiceFabric.Native" Version="2.2.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="3.1.4" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.1.4" />
+    <PackageReference Include="SFA.DAS.Payments.Application" Version="1.1.0" />
+    <PackageReference Include="SFA.DAS.Payments.Audit.Application" Version="1.1.0" />
+    <PackageReference Include="SFA.DAS.Payments.EarningEvents.Messages" Version="0.1.123" />
+    <PackageReference Include="SFA.DAS.Payments.FundingSource.Messages" Version="1.0.0" />
+    <PackageReference Include="SFA.DAS.Payments.Monitoring.Jobs.Client" Version="1.1.2" />
+    <PackageReference Include="SFA.DAS.Payments.Monitoring.Jobs.DataMessages" Version="1.1.2" />
+    <PackageReference Include="SFA.DAS.Payments.PeriodEnd.Messages" Version="1.1.0" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\SFA.DAS.Payments.Application\SFA.DAS.Payments.Application.csproj" />
-    <ProjectReference Include="..\SFA.DAS.Payments.Audit.Application\SFA.DAS.Payments.Audit.Application.csproj" />
-    <ProjectReference Include="..\SFA.DAS.Payments.EarningEvents.Messages\SFA.DAS.Payments.EarningEvents.Messages.csproj" />
-    <ProjectReference Include="..\SFA.DAS.Payments.FundingSource.Messages\SFA.DAS.Payments.FundingSource.Messages.csproj" />
-    <ProjectReference Include="..\SFA.DAS.Payments.Monitoring.Jobs.Client\SFA.DAS.Payments.Monitoring.Jobs.Client.csproj" />
-    <ProjectReference Include="..\SFA.DAS.Payments.Monitoring.Jobs.Messages\SFA.DAS.Payments.Monitoring.Jobs.Messages.csproj" />
-    <ProjectReference Include="..\SFA.DAS.Payments.PeriodEnd.Messages\SFA.DAS.Payments.PeriodEnd.Messages.csproj" />
     <ProjectReference Include="..\SFA.DAS.Payments.ProviderPayments.Domain\SFA.DAS.Payments.ProviderPayments.Domain.csproj" />
+    <ProjectReference Include="..\SFA.DAS.Payments.ProviderPayments.Messages.Core\SFA.DAS.Payments.ProviderPayments.Messages.Core.csproj" />
     <ProjectReference Include="..\SFA.DAS.Payments.ProviderPayments.Messages.Internal\SFA.DAS.Payments.ProviderPayments.Messages.Internal.csproj" />
-    <ProjectReference Include="..\SFA.DAS.Payments.ProviderPayments.Messages\SFA.DAS.Payments.ProviderPayments.Messages.csproj" />
     <ProjectReference Include="..\SFA.DAS.Payments.ProviderPayments.Model\SFA.DAS.Payments.ProviderPayments.Model.csproj" />
   </ItemGroup>
 

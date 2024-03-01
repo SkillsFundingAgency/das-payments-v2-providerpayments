@@ -5,31 +5,30 @@ VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SFA.DAS.Payments.ProviderPayments.AcceptanceTests", "SFA.DAS.Payments.ProviderPayments.AcceptanceTests\SFA.DAS.Payments.ProviderPayments.AcceptanceTests.csproj", "{9C46D571-25F1-4459-A302-23DA2CFEEEAB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SFA.DAS.Payments.ProviderPayments.Application.UnitTests", "SFA.DAS.Payments.ProviderPayments.Application.UnitTests\SFA.DAS.Payments.ProviderPayments.Application.UnitTests.csproj", "{BD99892E-4180-4899-B9DF-0176E9A56D81}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SFA.DAS.Payments.ProviderPayments.Application.UnitTests", "SFA.DAS.Payments.ProviderPayments.Application.UnitTests\SFA.DAS.Payments.ProviderPayments.Application.UnitTests.csproj", "{BD99892E-4180-4899-B9DF-0176E9A56D81}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SFA.DAS.Payments.ProviderPayments.Application", "SFA.DAS.Payments.ProviderPayments.Application\SFA.DAS.Payments.ProviderPayments.Application.csproj", "{DFEE54F8-511F-4C33-A222-A4B4D0A9217A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SFA.DAS.Payments.ProviderPayments.Application", "SFA.DAS.Payments.ProviderPayments.Application\SFA.DAS.Payments.ProviderPayments.Application.csproj", "{DFEE54F8-511F-4C33-A222-A4B4D0A9217A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SFA.DAS.Payments.ProviderPayments.Domain.UnitTests", "SFA.DAS.Payments.ProviderPayments.Domain.UnitTests\SFA.DAS.Payments.ProviderPayments.Domain.UnitTests.csproj", "{7248E8C9-AB15-48E6-A5B6-F60E6FC3ED2E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SFA.DAS.Payments.ProviderPayments.Domain.UnitTests", "SFA.DAS.Payments.ProviderPayments.Domain.UnitTests\SFA.DAS.Payments.ProviderPayments.Domain.UnitTests.csproj", "{7248E8C9-AB15-48E6-A5B6-F60E6FC3ED2E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SFA.DAS.Payments.ProviderPayments.Domain", "SFA.DAS.Payments.ProviderPayments.Domain\SFA.DAS.Payments.ProviderPayments.Domain.csproj", "{2D6A814F-0458-4680-BDB6-6F694B605455}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SFA.DAS.Payments.ProviderPayments.Domain", "SFA.DAS.Payments.ProviderPayments.Domain\SFA.DAS.Payments.ProviderPayments.Domain.csproj", "{2D6A814F-0458-4680-BDB6-6F694B605455}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SFA.DAS.Payments.ProviderPayments.LegacyExportService", "SFA.DAS.Payments.ProviderPayments.LegacyExportService\SFA.DAS.Payments.ProviderPayments.LegacyExportService.csproj", "{6661248D-7B06-42E8-B5B3-DEABA8030032}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SFA.DAS.Payments.ProviderPayments.LegacyExportService", "SFA.DAS.Payments.ProviderPayments.LegacyExportService\SFA.DAS.Payments.ProviderPayments.LegacyExportService.csproj", "{6661248D-7B06-42E8-B5B3-DEABA8030032}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SFA.DAS.Payments.ProviderPayments.Messages.Internal", "SFA.DAS.Payments.ProviderPayments.Messages.Internal\SFA.DAS.Payments.ProviderPayments.Messages.Internal.csproj", "{072E03F1-C232-4577-85D4-FDD633584FB4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SFA.DAS.Payments.ProviderPayments.Messages.Internal", "SFA.DAS.Payments.ProviderPayments.Messages.Internal\SFA.DAS.Payments.ProviderPayments.Messages.Internal.csproj", "{072E03F1-C232-4577-85D4-FDD633584FB4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SFA.DAS.Payments.ProviderPayments.Messages", "SFA.DAS.Payments.ProviderPayments.Messages\SFA.DAS.Payments.ProviderPayments.Messages.csproj", "{3201D8C4-27F9-46BA-8B6C-8E9691534230}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SFA.DAS.Payments.ProviderPayments.Model", "SFA.DAS.Payments.ProviderPayments.Model\SFA.DAS.Payments.ProviderPayments.Model.csproj", "{7C9D8A7A-4F20-471A-8024-C8BD9D5A63E2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SFA.DAS.Payments.ProviderPayments.Model", "SFA.DAS.Payments.ProviderPayments.Model\SFA.DAS.Payments.ProviderPayments.Model.csproj", "{7C9D8A7A-4F20-471A-8024-C8BD9D5A63E2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SFA.DAS.Payments.ProviderPayments.ProviderPaymentsService", "SFA.DAS.Payments.ProviderPayments.ProviderPaymentsService\SFA.DAS.Payments.ProviderPayments.ProviderPaymentsService.csproj", "{5810E5A5-706E-4F35-8F35-AAEB1BE71C47}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SFA.DAS.Payments.ProviderPayments.ProviderPaymentsService", "SFA.DAS.Payments.ProviderPayments.ProviderPaymentsService\SFA.DAS.Payments.ProviderPayments.ProviderPaymentsService.csproj", "{5810E5A5-706E-4F35-8F35-AAEB1BE71C47}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{4344E873-FBED-4862-A986-9EF5AC26CD86}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SFA.DAS.Payments.ProviderPayments.Messages.Core", "SFA.DAS.Payments.ProviderPayments.Messages.Core\SFA.DAS.Payments.ProviderPayments.Messages.Core.csproj", "{45338129-2F6E-43E9-ACA6-304C66D547E2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
-	EndGlobalSection
-	GlobalSection(SolutionProperties) = preSolution
-		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{9C46D571-25F1-4459-A302-23DA2CFEEEAB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -60,10 +59,6 @@ Global
 		{072E03F1-C232-4577-85D4-FDD633584FB4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{072E03F1-C232-4577-85D4-FDD633584FB4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{072E03F1-C232-4577-85D4-FDD633584FB4}.Release|Any CPU.Build.0 = Release|Any CPU
-		{3201D8C4-27F9-46BA-8B6C-8E9691534230}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{3201D8C4-27F9-46BA-8B6C-8E9691534230}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{3201D8C4-27F9-46BA-8B6C-8E9691534230}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{3201D8C4-27F9-46BA-8B6C-8E9691534230}.Release|Any CPU.Build.0 = Release|Any CPU
 		{7C9D8A7A-4F20-471A-8024-C8BD9D5A63E2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{7C9D8A7A-4F20-471A-8024-C8BD9D5A63E2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7C9D8A7A-4F20-471A-8024-C8BD9D5A63E2}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -72,5 +67,20 @@ Global
 		{5810E5A5-706E-4F35-8F35-AAEB1BE71C47}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5810E5A5-706E-4F35-8F35-AAEB1BE71C47}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5810E5A5-706E-4F35-8F35-AAEB1BE71C47}.Release|Any CPU.Build.0 = Release|Any CPU
+		{45338129-2F6E-43E9-ACA6-304C66D547E2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{45338129-2F6E-43E9-ACA6-304C66D547E2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{45338129-2F6E-43E9-ACA6-304C66D547E2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{45338129-2F6E-43E9-ACA6-304C66D547E2}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{9C46D571-25F1-4459-A302-23DA2CFEEEAB} = {4344E873-FBED-4862-A986-9EF5AC26CD86}
+		{BD99892E-4180-4899-B9DF-0176E9A56D81} = {4344E873-FBED-4862-A986-9EF5AC26CD86}
+		{7248E8C9-AB15-48E6-A5B6-F60E6FC3ED2E} = {4344E873-FBED-4862-A986-9EF5AC26CD86}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {D007E7D8-D2A2-4206-98CE-848E323B3329}
 	EndGlobalSection
 EndGlobal
