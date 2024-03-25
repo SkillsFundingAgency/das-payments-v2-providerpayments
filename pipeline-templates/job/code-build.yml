@@ -24,6 +24,15 @@ jobs:
       feedsToUse: 'select'
       vstsFeed: 'dct-pkg'
 
+  # task: DotNetCoreCLI@2 - src/SFA.DAS.Payments.ProviderPayments.Messages.Internal
+  - task: DotNetCoreCLI@2  
+    displayName: Restore - src/SFA.DAS.Payments.ProviderPayments.Messages.Internal
+    inputs:
+      command: restore
+      projects: src/SFA.DAS.Payments.ProviderPayments.Messages.Internal/SFA.DAS.Payments.ProviderPayments.Messages.Internal.csproj
+      noCache: true
+      feedsToUse: 'select'
+      vstsFeed: 'dct-pkg'
 
 
 
@@ -37,7 +46,15 @@ jobs:
       feedsToUse: 'select'
       vstsFeed: 'dct-pkg'
 
-
+  # task: NuGetCommand@2 - src/SFA.DAS.Payments.ProviderPayments.Messages.Internal
+  - task: NuGetCommand@2  
+    displayName: Restore - src/SFA.DAS.Payments.ProviderPayments.Messages.Internal
+    inputs:
+      command: restore
+      projects: src/SFA.DAS.Payments.ProviderPayments.Messages.Internal/SFA.DAS.Payments.ProviderPayments.Messages.Internal.csproj
+      noCache: true
+      feedsToUse: 'select'
+      vstsFeed: 'dct-pkg'
 
 
   # task: DotNetCoreCLI@2 (BUILD) - src/SFA.DAS.Payments.ProviderPayments.Messages.Core
@@ -47,6 +64,12 @@ jobs:
       projects:  src/SFA.DAS.Payments.ProviderPayments.Messages.Core/SFA.DAS.Payments.ProviderPayments.Messages.Core.csproj
       arguments: '--configuration $(buildConfiguration) --no-restore'
 
+  # task: DotNetCoreCLI@2 (BUILD) - src/SFA.DAS.Payments.ProviderPayments.Messages.Internal
+  - task: DotNetCoreCLI@2
+    displayName: Build
+    inputs:
+      projects:  src/SFA.DAS.Payments.ProviderPayments.Messages.Internal/SFA.DAS.Payments.ProviderPayments.Messages.Internal.csproj
+      arguments: '--configuration $(buildConfiguration) --no-restore'
 
 
 
@@ -59,7 +82,14 @@ jobs:
       arguments: "-o $(build.artifactstagingdirectory)/publish -c $(BuildConfiguration) --no-restore --no-build"
       modifyOutputPath: true
 
-
+  - task: DotNetCoreCLI@2
+    displayName: "Publish $(SolutionBaseName)"
+    inputs:
+      command: publish
+      publishWebProjects: false #set to false as this setting (which defaults to true) will parse the entire repo for web projects
+      projects: src/SFA.DAS.Payments.ProviderPayments.Messages.Internal/SFA.DAS.Payments.ProviderPayments.Messages.Internal.csproj
+      arguments: "-o $(build.artifactstagingdirectory)/publish -c $(BuildConfiguration) --no-restore --no-build"
+      modifyOutputPath: true
 
 
   - task: CopyFiles@2
@@ -86,3 +116,4 @@ jobs:
     parameters:
       DotNetStandardPackagesToPack: |
         src/SFA.DAS.Payments.ProviderPayments.Messages.Core/SFA.DAS.Payments.ProviderPayments.Messages.Core.csproj;
+        src/SFA.DAS.Payments.ProviderPayments.Messages.Internal/SFA.DAS.Payments.ProviderPayments.Messages.Internal.csproj;
