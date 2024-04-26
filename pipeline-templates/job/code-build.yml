@@ -127,7 +127,7 @@ jobs:
     displayName: 'Publish Pipeline Artifact - Provider Payments'
     inputs:
       targetPath: $(build.artifactstagingdirectory)
-      artifact: monitoring-drop
+      artifact: providerpayments-drop
       continueOnError: true
 
   - template: /azure-pipelines-templates/build/step/nuget-pack.yml
