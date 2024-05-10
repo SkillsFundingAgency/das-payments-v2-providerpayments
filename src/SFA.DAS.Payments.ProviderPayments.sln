@@ -3,8 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SFA.DAS.Payments.ProviderPayments.AcceptanceTests", "SFA.DAS.Payments.ProviderPayments.AcceptanceTests\SFA.DAS.Payments.ProviderPayments.AcceptanceTests.csproj", "{9C46D571-25F1-4459-A302-23DA2CFEEEAB}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SFA.DAS.Payments.ProviderPayments.Application.UnitTests", "SFA.DAS.Payments.ProviderPayments.Application.UnitTests\SFA.DAS.Payments.ProviderPayments.Application.UnitTests.csproj", "{BD99892E-4180-4899-B9DF-0176E9A56D81}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SFA.DAS.Payments.ProviderPayments.Application", "SFA.DAS.Payments.ProviderPayments.Application\SFA.DAS.Payments.ProviderPayments.Application.csproj", "{DFEE54F8-511F-4C33-A222-A4B4D0A9217A}"
@@ -31,10 +29,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{9C46D571-25F1-4459-A302-23DA2CFEEEAB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{9C46D571-25F1-4459-A302-23DA2CFEEEAB}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{9C46D571-25F1-4459-A302-23DA2CFEEEAB}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{9C46D571-25F1-4459-A302-23DA2CFEEEAB}.Release|Any CPU.Build.0 = Release|Any CPU
 		{BD99892E-4180-4899-B9DF-0176E9A56D81}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{BD99892E-4180-4899-B9DF-0176E9A56D81}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BD99892E-4180-4899-B9DF-0176E9A56D81}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -76,7 +70,6 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{9C46D571-25F1-4459-A302-23DA2CFEEEAB} = {4344E873-FBED-4862-A986-9EF5AC26CD86}
 		{BD99892E-4180-4899-B9DF-0176E9A56D81} = {4344E873-FBED-4862-A986-9EF5AC26CD86}
 		{7248E8C9-AB15-48E6-A5B6-F60E6FC3ED2E} = {4344E873-FBED-4862-A986-9EF5AC26CD86}
 	EndGlobalSection
