@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Threading.Tasks;
 using Autofac;
+using Microsoft.Extensions.DependencyInjection;
 using NServiceBus;
 using NServiceBus.Features;
 using SFA.DAS.Payments.Application.Infrastructure.Ioc;
@@ -67,26 +68,26 @@ namespace SFA.DAS.Payments.ProviderPayments.ProviderPaymentsService.Infrastructu
                     t.IsAssignableTo<RecordedAct1CompletionPayment>()
                 );
                 
+
             var persistence = endpointConfiguration.UsePersistence<AzureStoragePersistence>();
             persistence.ConnectionString(config.StorageConnectionString);
 
-            endpointConfiguration.DisableFeature<TimeoutManager>();
             var transport = endpointConfiguration.UseTransport<AzureServiceBusTransport>();
             transport
-                .ConnectionString(configHelper.GetConnectionString("DASServiceBusConnectionString"))
+                .ConnectionString(configHelper.GetConnectionString("MonitoringServiceBusConnectionString"))
                 .Transactions(TransportTransactionMode.ReceiveOnly)
-                .RuleNameShortener(ruleName => ruleName.Split('.').LastOrDefault() ?? ruleName);
+                .SubscriptionNamingConvention(ruleName => ruleName.Split('.').LastOrDefault() ?? ruleName);
 
             endpointConfiguration.SendFailedMessagesTo(config.FailedMessagesQueue);
-            endpointConfiguration.UseSerialization<NewtonsoftSerializer>();
+            endpointConfiguration.UseSerialization<NewtonsoftJsonSerializer>();
             endpointConfiguration.EnableInstallers();
 
             if (config.ProcessMessageSequentially) endpointConfiguration.LimitMessageProcessingConcurrencyTo(1);
 
             endpointConfiguration.Pipeline.Register(typeof(ExceptionHandlingBehavior), "Logs exceptions to the payments logger");
-            endpointConfiguration.RegisterComponents(cfg => cfg.RegisterSingleton(logger));
-            endpointConfiguration.RegisterComponents(cfg => cfg.RegisterSingleton(lifetimeScope.Resolve<IContainerScopeFactory>()));
-            endpointConfiguration.RegisterComponents(cfg => cfg.RegisterSingleton(lifetimeScope.Resolve<IEndpointInstanceFactory>()));
+            endpointConfiguration.RegisterComponents(cfg => cfg.AddSingleton(logger));
+            endpointConfiguration.RegisterComponents(cfg => cfg.AddSingleton(lifetimeScope.Resolve<IContainerScopeFactory>()));
+            endpointConfiguration.RegisterComponents(cfg => cfg.AddSingleton(lifetimeScope.Resolve<IEndpointInstanceFactory>()));
             
             return endpointConfiguration;
         }

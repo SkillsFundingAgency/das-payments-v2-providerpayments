@@ -43,10 +43,9 @@ namespace SFA.DAS.Payments.ProviderPayments.Application.Services
         private async Task<DateTime?> GetReferenceDataValidationDate(short academicYear, byte period)
         {
             var job = await context.Job.Where(x => x.JobType == JobType.PeriodEndSubmissionWindowValidationJob
-                                                && x.AcademicYear == academicYear
-                                                && x.CollectionPeriod == period
-                                                && x.EndTime != null
-                                                && x.EndTime.Value != null)
+                                                   && x.AcademicYear == academicYear
+                                                   && x.CollectionPeriod == period
+                                                   && x.EndTime != null)
                 .OrderByDescending(x => x.EndTime)
                 .FirstOrDefaultAsync();
             return job?.EndTime?.DateTime;

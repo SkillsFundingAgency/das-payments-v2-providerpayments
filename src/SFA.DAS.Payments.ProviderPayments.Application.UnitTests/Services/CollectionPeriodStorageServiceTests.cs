@@ -39,7 +39,7 @@ namespace SFA.DAS.Payments.ProviderPayments.Application.UnitTests.Services
         }
 
         [Test]
-        public async Task WhenStoringCollectionPeriod_AndNoReferenceDataValidationDateFound_ThenThrowsException()
+        public void WhenStoringCollectionPeriod_AndNoReferenceDataValidationDateFound_ThenThrowsException()
         {
             Assert.ThrowsAsync<InvalidOperationException>(() => fixture.Act());
         }
@@ -61,6 +61,7 @@ namespace SFA.DAS.Payments.ProviderPayments.Application.UnitTests.Services
         private readonly byte period;
         private readonly DateTime completionDate;
         private readonly CollectionPeriodModel existingCollectionPeriod;
+        private readonly JobModel jobModel;
 
         private readonly IProviderPaymentsDataContext context;
         private readonly Mock<IPaymentLogger> logger;
@@ -80,6 +81,13 @@ namespace SFA.DAS.Payments.ProviderPayments.Application.UnitTests.Services
             existingCollectionPeriod.AcademicYear = academicYear;
             existingCollectionPeriod.Period = period;
 
+            jobModel = fixture.Create<JobModel>();
+            jobModel.JobType = JobType.PeriodEndSubmissionWindowValidationJob;
+            jobModel.AcademicYear = academicYear;
+            jobModel.CollectionPeriod = period;
+            jobModel.EndTime = DateTimeOffset.Now;
+            jobModel.Status = JobStatus.DcTasksFailed;
+
             logger = new Mock<IPaymentLogger>();
             context = new ProviderPaymentsDataContext(new DbContextOptionsBuilder<ProviderPaymentsDataContext>().UseInMemoryDatabase("test", new InMemoryDatabaseRoot()).Options);
             sut = new CollectionPeriodStorageService(context, logger.Object);
@@ -96,7 +104,7 @@ namespace SFA.DAS.Payments.ProviderPayments.Application.UnitTests.Services
 
         internal CollectionPeriodStorageServiceFixture WithExisting_PeriodEndSubmissionWindowValidationJob_WithEndTime()
         {
-            context.Job.Add(new JobModel{ JobType = JobType.PeriodEndSubmissionWindowValidationJob, AcademicYear = academicYear, CollectionPeriod = period, EndTime = DateTimeOffset.Now, Status = JobStatus.DcTasksFailed });
+            context.Job.Add(jobModel);
             context.SaveChanges();
             return this;
         }
