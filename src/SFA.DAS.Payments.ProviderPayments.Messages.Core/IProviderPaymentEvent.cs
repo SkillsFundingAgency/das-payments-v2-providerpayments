@@ -1,7 +1,7 @@
 ﻿using SFA.DAS.Payments.Messages.Common.Events;
 using SFA.DAS.Payments.Model.Core.Entities;
 
-namespace SFA.DAS.Payments.ProviderPayments.Messages
+namespace SFA.DAS.Payments.ProviderPayments.Messages.Core
 {
     public interface IProviderPaymentEvent : IPeriodisedPaymentEvent
     {

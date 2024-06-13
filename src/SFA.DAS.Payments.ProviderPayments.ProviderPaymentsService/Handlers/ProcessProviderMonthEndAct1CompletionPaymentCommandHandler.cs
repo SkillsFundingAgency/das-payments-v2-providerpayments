@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore.Internal;
 using NServiceBus;
@@ -41,7 +43,7 @@ namespace SFA.DAS.Payments.ProviderPayments.ProviderPaymentsService.Handlers
             {
                 paymentLogger.LogDebug($"Processing Act1 Completion Payment Event. Ukprn: {message.Ukprn}, Collection: {message.CollectionPeriod.Period:00}-{message.CollectionPeriod.AcademicYear}, job: {message.JobId}");
 
-                await dasEndPoint.Publish(paymentEvent);
+                await dasEndPoint.Publish(paymentEvent, CancellationToken.None);
             }
 
             paymentLogger.LogInfo($"Successfully Processed Month End Act1 Completion Payment Command for  ukprn: {message.Ukprn}, Collection:{message.CollectionPeriod.Period:00}-{message.CollectionPeriod.AcademicYear}, job: {message.JobId}");
