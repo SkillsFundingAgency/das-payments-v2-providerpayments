@@ -1,6 +1,0 @@
-#Changes to the following files/folders require review from listed teams
-.github/CODEOWNERS      @PravPattisapu
-/azure/                 @PravPattisapu
-azure-pipelines.yml     @PravPattisapu
-/pipeline-templates/    @PravPattisapu
-GitVersion.yml          @PravPattisapu
