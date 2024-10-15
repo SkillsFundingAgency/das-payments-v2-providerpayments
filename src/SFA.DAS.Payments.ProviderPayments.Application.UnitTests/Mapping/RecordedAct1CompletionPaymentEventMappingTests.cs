@@ -12,13 +12,20 @@ namespace SFA.DAS.Payments.ProviderPayments.Application.UnitTests.Mapping
     [TestFixture]
     public class RecordedAct1CompletionPaymentEventMappingTests
     {
+        private IMapper _mapper;
 
         [OneTimeSetUp]
         public void SetUp()
         {
-            Mapper.Reset();
-            Mapper.Initialize(cfg => { cfg.AddProfile<ProviderPaymentsProfile>(); });
-            Mapper.AssertConfigurationIsValid();
+            var config = new MapperConfiguration(cfg => {
+                cfg.AddProfile<ProviderPaymentsProfile>();
+            });
+
+            // Assert configuration is valid
+            config.AssertConfigurationIsValid();
+
+            // Create the IMapper instance and assign it to the class-level field
+            _mapper = config.CreateMapper();
         }
 
         [Test]
@@ -62,7 +69,7 @@ namespace SFA.DAS.Payments.ProviderPayments.Application.UnitTests.Mapping
 
             };
 
-            var payment = Mapper.Map<PaymentModel, RecordedAct1CompletionPayment>(paymentModel);
+            var payment = _mapper.Map<PaymentModel, RecordedAct1CompletionPayment>(paymentModel);
             
             payment.EventId.Should().NotBeEmpty();
             payment.EventTime.Should().BeCloseTo(DateTimeOffset.UtcNow, TimeSpan.FromSeconds(5));
