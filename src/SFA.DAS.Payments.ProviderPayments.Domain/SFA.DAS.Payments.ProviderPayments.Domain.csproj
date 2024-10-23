@@ -1,11 +1,11 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netstandard2.0</TargetFramework>
+    <TargetFramework>net6.0</TargetFramework>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="SFA.DAS.Payments.EarningEvents.Messages" Version="0.1.123" />
+    <PackageReference Include="SFA.DAS.Payments.EarningEvents.Messages" Version="1.0.5" />
   </ItemGroup>
 
   <ItemGroup>

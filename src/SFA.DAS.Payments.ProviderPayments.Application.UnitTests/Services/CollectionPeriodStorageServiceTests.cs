@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using AutoFixture;
 using FluentAssertions;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking.Internal;
 using Microsoft.EntityFrameworkCore.Storage;
 using Moq;
 using NUnit.Framework;
@@ -61,6 +62,7 @@ namespace SFA.DAS.Payments.ProviderPayments.Application.UnitTests.Services
         private readonly byte period;
         private readonly DateTime completionDate;
         private readonly CollectionPeriodModel existingCollectionPeriod;
+        private readonly JobModel existingJob;
 
         private readonly IProviderPaymentsDataContext context;
         private readonly Mock<IPaymentLogger> logger;
@@ -80,6 +82,13 @@ namespace SFA.DAS.Payments.ProviderPayments.Application.UnitTests.Services
             existingCollectionPeriod.AcademicYear = academicYear;
             existingCollectionPeriod.Period = period;
 
+            existingJob = fixture.Create<JobModel>();
+            existingJob.JobType = JobType.PeriodEndSubmissionWindowValidationJob;
+            existingJob.AcademicYear = academicYear;
+            existingJob.CollectionPeriod = period;
+            existingJob.EndTime = DateTimeOffset.Now;
+            existingJob.Status = JobStatus.DcTasksFailed; 
+            
             logger = new Mock<IPaymentLogger>();
             context = new ProviderPaymentsDataContext(new DbContextOptionsBuilder<ProviderPaymentsDataContext>().UseInMemoryDatabase("test", new InMemoryDatabaseRoot()).Options);
             sut = new CollectionPeriodStorageService(context, logger.Object);
@@ -96,7 +105,7 @@ namespace SFA.DAS.Payments.ProviderPayments.Application.UnitTests.Services
 
         internal CollectionPeriodStorageServiceFixture WithExisting_PeriodEndSubmissionWindowValidationJob_WithEndTime()
         {
-            context.Job.Add(new JobModel{ JobType = JobType.PeriodEndSubmissionWindowValidationJob, AcademicYear = academicYear, CollectionPeriod = period, EndTime = DateTimeOffset.Now, Status = JobStatus.DcTasksFailed });
+            context.Job.Add(existingJob);
             context.SaveChanges();
             return this;
         }
