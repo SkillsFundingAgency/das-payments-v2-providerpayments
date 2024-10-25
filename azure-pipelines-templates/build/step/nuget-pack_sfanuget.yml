@@ -22,10 +22,10 @@ steps:
     packagesToPack: ${{ parameters.DotNetStandardPackagesToPack }}
     versioningScheme: byEnvVar
     versionEnvVar: NuGetPackageVersion
-    packDirectory: $(build.artifactstagingdirectory)/NuGetPackages-sfanuget
+    packDirectory: $(build.artifactstagingdirectory)/NuGetPackages-Messages
 
 - task: PublishBuildArtifacts@1
-  displayName: 'Publish Artifact: NuGetPackages-sfanuget'
+  displayName: 'Publish Artifact: NuGetPackages-Messages'
   inputs:
-    ArtifactName: NuGetPackages-sfanuget
-    pathtoPublish: '$(build.artifactstagingdirectory)/NuGetPackages-sfanuget'
+    ArtifactName: NuGetPackages-Messages
+    pathtoPublish: '$(build.artifactstagingdirectory)/NuGetPackages-Messages'
