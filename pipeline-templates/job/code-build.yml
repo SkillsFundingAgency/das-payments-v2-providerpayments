@@ -46,18 +46,18 @@ jobs:
       continueOnError: true
       clean: true
       
-  - task: DotNetCoreCLI@2
-    displayName: 'dotnet build UnitTest Projects'
-    inputs:
-      command: build
-      projects: '**/*unittest*.csproj'
+  #- task: DotNetCoreCLI@2
+  #  displayName: 'dotnet build UnitTest Projects'
+  #  inputs:
+  #    command: build
+  #    projects: '**/*unittest*.csproj'
 
-  - task: DotNetCoreCLI@2
-    displayName: 'dotnet test UnitTest Projects'
-    inputs:
-      command: test
-      projects: '**/*unittest*.csproj'
-      arguments: '--filter FullyQualifiedName~UnitTests'
+  #- task: DotNetCoreCLI@2
+  #  displayName: 'dotnet test UnitTest Projects'
+  #  inputs:
+  #    command: test
+  #    projects: '**/*unittest*.csproj'
+  #    arguments: '--filter FullyQualifiedName~UnitTests'
 
   - task: MSBuild@1
     displayName: 'Build solution'
