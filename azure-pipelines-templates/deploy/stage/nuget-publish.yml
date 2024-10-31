@@ -27,3 +27,13 @@ stages:
               allowPackageConflicts: true
               nuGetFeedType: external
               publishFeedCredentials: 'Paymentsv2-Nuget'
+          - download: current
+            artifact: NuGetPackages-sfanuget
+          - task: NuGetCommand@2
+            displayName: NuGet push ProviderPayments 
+            inputs:
+              command: push
+              packagesToPush: '$(Pipeline.Workspace)/NuGetPackages-sfanuget/*.nupkg;!$(Pipeline.Workspace)/NuGetPackages-sfanuget/*.symbols.nupkg'
+              allowPackageConflicts: true
+              nuGetFeedType: external
+              publishFeedCredentials: 'SFA NuGet'
