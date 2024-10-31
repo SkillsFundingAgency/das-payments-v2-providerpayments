@@ -1,4 +1,6 @@
-﻿using System;
+﻿
+
+using System;
 using AutoMapper;
 using FluentAssertions;
 using NUnit.Framework;
@@ -14,13 +16,20 @@ namespace SFA.DAS.Payments.ProviderPayments.Application.UnitTests.Mapping
     [TestFixture]
     public class FundingSourcePaymentEventMappingTests
     {
+        private IMapper mapper;
 
         [OneTimeSetUp]
         public void SetUp()
         {
-            Mapper.Reset();
-            Mapper.Initialize(cfg => { cfg.AddProfile<ProviderPaymentsProfile>(); });
-            Mapper.AssertConfigurationIsValid();
+            var config = new MapperConfiguration(cfg => {
+                cfg.AddProfile<ProviderPaymentsProfile>();
+            });
+
+            // Assert configuration is valid
+            config.AssertConfigurationIsValid();
+
+            // Create the IMapper instance and assign it to the class-level field
+            mapper = config.CreateMapper();
         }
 
         [Test]
@@ -58,7 +67,7 @@ namespace SFA.DAS.Payments.ProviderPayments.Application.UnitTests.Mapping
                 AgeAtStartOfLearning = 17,
                 FundingPlatformType = FundingPlatformType.SubmitLearnerData
             };
-            var payment = Mapper.Map<EmployerCoInvestedFundingSourcePaymentEvent, ProviderPaymentEventModel>(employerCoInvested);
+            var payment = mapper.Map<EmployerCoInvestedFundingSourcePaymentEvent, ProviderPaymentEventModel>(employerCoInvested);
             payment.Ukprn.Should().Be(employerCoInvested.Ukprn);
             payment.CollectionPeriod.Should().Be(employerCoInvested.CollectionPeriod.Period);
             payment.AcademicYear.Should().Be(employerCoInvested.CollectionPeriod.AcademicYear);
@@ -117,7 +126,7 @@ namespace SFA.DAS.Payments.ProviderPayments.Application.UnitTests.Mapping
                 FundingPlatformType = FundingPlatformType.SubmitLearnerData
             };
 
-            var payment = Mapper.Map<ProviderPaymentEventModel>(levy);
+            var payment = mapper.Map<ProviderPaymentEventModel>(levy);
             payment.Ukprn.Should().Be(levy.Ukprn);
             payment.CollectionPeriod.Should().Be(levy.CollectionPeriod.Period);
             payment.AcademicYear.Should().Be(levy.CollectionPeriod.AcademicYear);
@@ -176,7 +185,7 @@ namespace SFA.DAS.Payments.ProviderPayments.Application.UnitTests.Mapping
                 FundingPlatformType = FundingPlatformType.SubmitLearnerData
             };
 
-            var payment = Mapper.Map<ProviderPaymentEventModel>(transfer);
+            var payment = mapper.Map<ProviderPaymentEventModel>(transfer);
             payment.Ukprn.Should().Be(transfer.Ukprn);
             payment.CollectionPeriod.Should().Be(transfer.CollectionPeriod.Period);
             payment.AcademicYear.Should().Be(transfer.CollectionPeriod.AcademicYear);
@@ -228,7 +237,7 @@ namespace SFA.DAS.Payments.ProviderPayments.Application.UnitTests.Mapping
                 AccountId = 123456789,
                 ApprenticeshipEmployerType = ApprenticeshipEmployerType.Levy
             };
-            var payment = Mapper.Map<EmployerCoInvestedFundingSourcePaymentEvent, EmployerCoInvestedProviderPaymentEvent>(employerCoInvested);
+            var payment = mapper.Map<EmployerCoInvestedFundingSourcePaymentEvent, EmployerCoInvestedProviderPaymentEvent>(employerCoInvested);
             payment.Ukprn.Should().Be(employerCoInvested.Ukprn);
             payment.CollectionPeriod.Period.Should().Be(employerCoInvested.CollectionPeriod.Period);
             payment.CollectionPeriod.AcademicYear.Should().Be(employerCoInvested.CollectionPeriod.AcademicYear);
@@ -278,7 +287,7 @@ namespace SFA.DAS.Payments.ProviderPayments.Application.UnitTests.Mapping
             fundingSourceEvent.AgeAtStartOfLearning = 17;
             fundingSourceEvent.FundingPlatformType = FundingPlatformType.SubmitLearnerData;
 
-            var payment = Mapper.Map<ProviderPaymentEvent>(fundingSourceEvent);
+            var payment = mapper.Map<ProviderPaymentEvent>(fundingSourceEvent);
             payment.Should().NotBeNull();
             payment.Should().BeAssignableTo(destType);
         }
@@ -314,7 +323,7 @@ namespace SFA.DAS.Payments.ProviderPayments.Application.UnitTests.Mapping
             fundingSourceEvent.AgeAtStartOfLearning = 17;
             fundingSourceEvent.FundingPlatformType = FundingPlatformType.SubmitLearnerData;
 
-            var providerPayment = Mapper.Map<ProviderPaymentEventModel>(fundingSourceEvent);
+            var providerPayment = mapper.Map<ProviderPaymentEventModel>(fundingSourceEvent);
 
             providerPayment.StartDate.Should().Be(fundingSourceEvent.StartDate);
             providerPayment.PlannedEndDate.Should().Be(fundingSourceEvent.PlannedEndDate);
@@ -351,7 +360,7 @@ namespace SFA.DAS.Payments.ProviderPayments.Application.UnitTests.Mapping
 
             var providerPayment = Activator.CreateInstance(providerPaymentEventType) as ProviderPaymentEvent;
 
-            Mapper.Map(providerPaymentEvent, providerPayment);
+            mapper.Map(providerPaymentEvent, providerPayment);
 
             providerPayment.StartDate.Should().Be(providerPaymentEvent.StartDate);
             providerPayment.PlannedEndDate.Should().Be(providerPaymentEvent.PlannedEndDate.Value);
