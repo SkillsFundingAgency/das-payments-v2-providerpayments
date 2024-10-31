@@ -141,5 +141,9 @@ jobs:
   - template: /azure-pipelines-templates/build/step/nuget-pack.yml
     parameters:
       DotNetStandardPackagesToPack: |
-        src/SFA.DAS.Payments.ProviderPayments.Messages/SFA.DAS.Payments.ProviderPayments.Messages.csproj;
         src/SFA.DAS.Payments.ProviderPayments.Messages.Internal/SFA.DAS.Payments.ProviderPayments.Messages.Internal.csproj;
+
+  - template: /azure-pipelines-templates/build/step/nuget-pack_Messages.yml
+    parameters:
+      DotNetStandardPackagesToPack: |
+        src/SFA.DAS.Payments.ProviderPayments.Messages/SFA.DAS.Payments.ProviderPayments.Messages.csproj;
