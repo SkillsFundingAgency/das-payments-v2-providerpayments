@@ -14,15 +14,15 @@
 
  
   <ItemGroup>
-    <PackageReference Include="Autofac" Version="4.8.1" />
-    <PackageReference Include="Autofac.ServiceFabric" Version="2.0.0" />
-    <PackageReference Include="AutoMapper" Version="7.0.1" />
+    <PackageReference Include="Autofac" Version="7.0.1" />
+    <PackageReference Include="Autofac.ServiceFabric" Version="4.0.0" />
+    <PackageReference Include="AutoMapper" Version="13.0.1" />
     <PackageReference Include="Microsoft.ServiceFabric.Actors" Version="3.4.664" />
     <PackageReference Include="Microsoft.ServiceFabric.Services" Version="3.4.664" />
     <PackageReference Include="Microsoft.ServiceFabric.Services.Remoting" Version="3.4.664" />
-    <PackageReference Include="NServiceBus" Version="7.1.5" />
+    <PackageReference Include="NServiceBus" Version="8.1.1" />
 
-    <PackageReference Include="SFA.DAS.Payments.Application" Version="2.0.6-prerelease-22" />
+    <PackageReference Include="SFA.DAS.Payments.Application" Version="2.0.6-prerelease-26" />
     <PackageReference Include="SFA.DAS.Payments.Audit.Application" Version="1.1.5-prerelease-459" />
     <PackageReference Include="SFA.DAS.Payments.Audit.Application.ServiceFabric" Version="1.1.5-prerelease-459" />
     <PackageReference Include="SFA.DAS.Payments.PeriodEnd.Messages" Version="0.1.39-prerelease-18" />

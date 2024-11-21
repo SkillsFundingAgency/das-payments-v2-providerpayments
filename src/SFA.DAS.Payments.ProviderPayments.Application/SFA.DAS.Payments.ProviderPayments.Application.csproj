@@ -14,7 +14,7 @@
 		<PackageReference Include="Microsoft.EntityFrameworkCore" Version="6.0.32" />
 		<PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="6.0.32" />
 
-		<PackageReference Include="SFA.DAS.Payments.Application" Version="2.0.6-prerelease-13" />
+		<PackageReference Include="SFA.DAS.Payments.Application" Version="2.0.6-prerelease-26" />
 		<PackageReference Include="SFA.DAS.Payments.Audit.Application" Version="1.1.5-prerelease-459" />
 		<PackageReference Include="SFA.DAS.Payments.EarningEvents.Messages" Version="2.0.0-prerelease-751" />
 		<PackageReference Include="SFA.DAS.Payments.FundingSource.Messages" Version="0.1.198-prerelease-51" />
