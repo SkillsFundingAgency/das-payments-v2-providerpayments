@@ -11,8 +11,8 @@
   <ItemGroup>
     <PackageReference Include="AutoMapper" Version="13.0.1" />
 
-    <PackageReference Include="SFA.DAS.Payments.Messages.Common" Version="2.0.6-prerelease-26" />
-    <PackageReference Include="SFA.DAS.Payments.Model.Core" Version="2.0.6-prerelease-26" />
+    <PackageReference Include="SFA.DAS.Payments.Messages.Common" Version="2.0.6-prerelease-31" />
+    <PackageReference Include="SFA.DAS.Payments.Model.Core" Version="2.0.6-prerelease-31" />
     <PackageReference Include="SFA.DAS.Payments.Audit.Model" Version="1.1.5-prerelease-459" />
     <PackageReference Include="SFA.DAS.Payments.FundingSource.Model" Version="0.1.198-prerelease-51" />
   </ItemGroup>
