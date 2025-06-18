@@ -2,6 +2,7 @@
 using SFA.DAS.Payments.EarningEvents.Messages.Events;
 using SFA.DAS.Payments.ProviderPayments.Domain.Models;
 using System;
+using NUnit.Framework.Legacy;
 
 namespace SFA.DAS.Payments.ProviderPayments.Domain.UnitTests
 {
@@ -33,7 +34,7 @@ namespace SFA.DAS.Payments.ProviderPayments.Domain.UnitTests
                 CurrentIlr = null,
             });
 
-            Assert.IsTrue(result);
+            ClassicAssert.IsTrue(result);
         }
 
         [Test]
@@ -49,7 +50,7 @@ namespace SFA.DAS.Payments.ProviderPayments.Domain.UnitTests
                 IncomingPaymentSubmissionDate = DateTime.MaxValue
             });
 
-            Assert.IsTrue(result);
+            ClassicAssert.IsTrue(result);
         }
 
         [Test]
@@ -64,7 +65,7 @@ namespace SFA.DAS.Payments.ProviderPayments.Domain.UnitTests
                 IncomingPaymentSubmissionDate = DateTime.MinValue
             });
 
-            Assert.IsFalse(result);
+            ClassicAssert.IsFalse(result);
         }
     }
 }

@@ -13,12 +13,21 @@ namespace SFA.DAS.Payments.ProviderPayments.Application.UnitTests.Mapping
     public class RecordedAct1CompletionPaymentEventMappingTests
     {
 
+        private MapperConfiguration config;
+        private IMapper Mapper;
+
         [OneTimeSetUp]
         public void SetUp()
         {
-            Mapper.Reset();
-            Mapper.Initialize(cfg => { cfg.AddProfile<ProviderPaymentsProfile>(); });
-            Mapper.AssertConfigurationIsValid();
+            config = null;
+            // Arrange
+            config = new MapperConfiguration(configuration =>
+            {
+                configuration.AddProfile<ProviderPaymentsProfile>();
+
+            });
+            config.AssertConfigurationIsValid();
+            Mapper = config.CreateMapper();
         }
 
         [Test]
