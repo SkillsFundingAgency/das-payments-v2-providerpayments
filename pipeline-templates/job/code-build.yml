@@ -139,7 +139,7 @@ jobs:
     displayName: 'Publish Pipeline Artifact - ProviderPayments'
     inputs:
       targetPath: $(build.artifactstagingdirectory)
-      artifact: audit-drop
+      artifact: providerpayments-drop
       continueOnError: true
 
   - template: /azure-pipelines-templates/build/step/nuget-pack.yml
