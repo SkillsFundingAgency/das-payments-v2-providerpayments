@@ -96,7 +96,7 @@ namespace SFA.DAS.Payments.ProviderPayments.Application.UnitTests.Services
 
         internal CollectionPeriodStorageServiceFixture WithExisting_PeriodEndSubmissionWindowValidationJob_WithEndTime()
         {
-            context.Job.Add(new JobModel{ JobType = JobType.PeriodEndSubmissionWindowValidationJob, AcademicYear = academicYear, CollectionPeriod = period, EndTime = DateTimeOffset.Now, Status = JobStatus.DcTasksFailed });
+            context.Job.Add(new JobModel{ JobType = JobType.PeriodEndSubmissionWindowValidationJob, AcademicYear = academicYear, CollectionPeriod = period, EndTime = DateTimeOffset.Now, Status = JobStatus.DcTasksFailed, DcJobId = 1234});
             context.SaveChanges();
             return this;
         }

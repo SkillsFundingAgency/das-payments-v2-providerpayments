@@ -23,7 +23,7 @@ namespace SFA.DAS.Payments.ProviderPayments.Application.Infrastructure.ioc
             builder.Register(c => new MapperConfiguration(
                     cfg =>
                     {
-                        cfg.AddProfiles(GetType().Assembly);
+                        cfg.AddMaps(GetType().Assembly);
                     }))
                 .AsSelf()
                 .SingleInstance();

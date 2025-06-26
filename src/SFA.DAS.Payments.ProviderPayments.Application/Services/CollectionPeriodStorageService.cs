@@ -26,7 +26,7 @@ namespace SFA.DAS.Payments.ProviderPayments.Application.Services
             if (context.CollectionPeriod.Any(x => x.AcademicYear == message.CollectionPeriod.AcademicYear && x.Period == message.CollectionPeriod.Period))
                 return;
 
-            var referenceDataValidationDate = await GetReferenceDataValidationDate(message.CollectionPeriod.AcademicYear, message.CollectionPeriod.Period);
+            var referenceDataValidationDate = GetReferenceDataValidationDate(message.CollectionPeriod.AcademicYear, message.CollectionPeriod.Period);
             if (referenceDataValidationDate == null)
                 throw new InvalidOperationException($"Failed to find successful PeriodEndSubmissionWindowValidationJob for academic year: {message.CollectionPeriod.AcademicYear} and period: {message.CollectionPeriod.Period} with an EndTime set");
 
@@ -40,15 +40,14 @@ namespace SFA.DAS.Payments.ProviderPayments.Application.Services
             await context.SaveChanges();
         }
 
-        private async Task<DateTime?> GetReferenceDataValidationDate(short academicYear, byte period)
+        private DateTime? GetReferenceDataValidationDate(short academicYear, byte period)
         {
-            var job = await context.Job.Where(x => x.JobType == JobType.PeriodEndSubmissionWindowValidationJob
-                                                && x.AcademicYear == academicYear
-                                                && x.CollectionPeriod == period
-                                                && x.EndTime != null
-                                                && x.EndTime.Value != null)
+            var job = context.Job.Local.Where(x => x.JobType == JobType.PeriodEndSubmissionWindowValidationJob
+                                                   && x.AcademicYear == academicYear
+                                                   && x.CollectionPeriod == period
+                                                   && x.EndTime != null)
                 .OrderByDescending(x => x.EndTime)
-                .FirstOrDefaultAsync();
+                .FirstOrDefault();
             return job?.EndTime?.DateTime;
         }
     }

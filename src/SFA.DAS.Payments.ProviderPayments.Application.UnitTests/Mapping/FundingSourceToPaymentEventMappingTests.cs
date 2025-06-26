@@ -2,6 +2,7 @@
 using AutoMapper;
 using FluentAssertions;
 using NUnit.Framework;
+using SFA.DAS.Payments.Audit.Application.Mapping.DataLock;
 using SFA.DAS.Payments.FundingSource.Messages.Events;
 using SFA.DAS.Payments.Model.Core;
 using SFA.DAS.Payments.Model.Core.Entities;
@@ -14,13 +15,24 @@ namespace SFA.DAS.Payments.ProviderPayments.Application.UnitTests.Mapping
     [TestFixture]
     public class FundingSourcePaymentEventMappingTests
     {
+        private MapperConfiguration config;
+        private IMapper Mapper;
+
+
 
         [OneTimeSetUp]
         public void SetUp()
         {
-            Mapper.Reset();
-            Mapper.Initialize(cfg => { cfg.AddProfile<ProviderPaymentsProfile>(); });
-            Mapper.AssertConfigurationIsValid();
+
+            config = null;
+            // Arrange
+            config = new MapperConfiguration(configuration =>
+            {
+                configuration.AddProfile<ProviderPaymentsProfile>();
+
+            });
+            config.AssertConfigurationIsValid();
+            Mapper = config.CreateMapper();
         }
 
         [Test]

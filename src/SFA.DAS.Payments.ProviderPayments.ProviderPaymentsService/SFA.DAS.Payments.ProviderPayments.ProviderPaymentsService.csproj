@@ -24,35 +24,30 @@
     <PackageReference Include="Autofac" Version="7.0.1" />
     <PackageReference Include="Autofac.ServiceFabric" Version="4.0.0" />
     <PackageReference Include="AutoMapper" Version="13.0.1" />
+    <PackageReference Include="Microsoft.ServiceFabric" Version="10.0.1010" />
+    <PackageReference Include="Microsoft.ServiceFabric.Data.Interfaces" Version="7.0.1010" />
     <PackageReference Include="Microsoft.ServiceFabric.Actors" Version="7.0.1001" />
     <PackageReference Include="Microsoft.ServiceFabric.Services" Version="7.0.1001" />
     <PackageReference Include="Microsoft.ServiceFabric.Services.Remoting" Version="7.0.1001" />
     <PackageReference Include="Microsoft.ServiceFabric.Diagnostics.Internal" Version="7.0.1010" />
     <PackageReference Include="NServiceBus" Version="8.1.1" />
 
-    <PackageReference Include="SFA.DAS.Payments.Application" Version="2.0.6-prerelease-31" />
-    <PackageReference Include="SFA.DAS.Payments.Core" Version="2.0.6-prerelease-31" />
+    <PackageReference Include="SFA.DAS.Payments.Application" Version="2.0.7-prerelease-35" />
+    <PackageReference Include="SFA.DAS.Payments.Core" Version="2.0.7-prerelease-35" />
     <PackageReference Include="SFA.DAS.Payments.EarningEvents.Messages" Version="2.0.0-prerelease-17" />
     <PackageReference Include="SFA.DAS.Payments.Monitoring.Jobs.Client" Version="0.2.1-prerelease-939" />
     <PackageReference Include="SFA.DAS.Payments.Monitoring.Jobs.Data" Version="0.2.1-prerelease-939" />
     <PackageReference Include="SFA.DAS.Payments.ServiceFabric.Core" Version="2.0.3-prerelease-5" />
 
-    <PackageReference Include="SFA.DAS.Payments.Audit.Model" Version="0.1.15-prerelease-435" />
+    <PackageReference Include="SFA.DAS.Payments.Audit.Model" Version="0.1.15-prerelease-436" />
+    <PackageReference Include="SFA.DAS.Payments.Audit.Application.ServiceFabric" Version="0.1.15-prerelease-436" />
+    <PackageReference Include="SFA.DAS.Payments.Audit.Application" Version="0.1.15-prerelease-436" />
   </ItemGroup>
 
   <ItemGroup>
-    <!--<ProjectReference Include="..\SFA.DAS.Payments.Application\SFA.DAS.Payments.Application.csproj" />-->
-    <ProjectReference Include="..\SFA.DAS.Payments.Audit.Application.ServiceFabric\SFA.DAS.Payments.Audit.Application.ServiceFabric.csproj" />
-    <ProjectReference Include="..\SFA.DAS.Payments.Audit.Application\SFA.DAS.Payments.Audit.Application.csproj" />
-    <!--<ProjectReference Include="..\SFA.DAS.Payments.Audit.Model\SFA.DAS.Payments.Audit.Model.csproj" />-->
-    <!--<ProjectReference Include="..\SFA.DAS.Payments.Core\SFA.DAS.Payments.Core.csproj" />-->
-    <!--<ProjectReference Include="..\SFA.DAS.Payments.EarningEvents.Messages\SFA.DAS.Payments.EarningEvents.Messages.csproj" />-->
-    <!--<ProjectReference Include="..\SFA.DAS.Payments.Monitoring.Jobs.Client\SFA.DAS.Payments.Monitoring.Jobs.Client.csproj" />
-    <ProjectReference Include="..\SFA.DAS.Payments.Monitoring.Jobs.Messages\SFA.DAS.Payments.Monitoring.Jobs.Messages.csproj" />-->
     <ProjectReference Include="..\SFA.DAS.Payments.ProviderPayments.Application\SFA.DAS.Payments.ProviderPayments.Application.csproj" />
     <ProjectReference Include="..\SFA.DAS.Payments.ProviderPayments.Domain\SFA.DAS.Payments.ProviderPayments.Domain.csproj" />
     <ProjectReference Include="..\SFA.DAS.Payments.ProviderPayments.Messages.Internal\SFA.DAS.Payments.ProviderPayments.Messages.Internal.csproj" />
-    <!--<ProjectReference Include="..\SFA.DAS.Payments.ServiceFabric.Core\SFA.DAS.Payments.ServiceFabric.Core.csproj" />-->
   </ItemGroup>
 
 </Project>
