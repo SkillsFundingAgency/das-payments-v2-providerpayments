@@ -42,7 +42,7 @@ namespace SFA.DAS.Payments.ProviderPayments.Application.Services
 
         private DateTime? GetReferenceDataValidationDate(short academicYear, byte period)
         {
-            var job = context.Job.Local.Where(x => x.JobType == JobType.PeriodEndSubmissionWindowValidationJob
+            var job = context.Job.Where(x => x.JobType == JobType.PeriodEndSubmissionWindowValidationJob
                                                    && x.AcademicYear == academicYear
                                                    && x.CollectionPeriod == period
                                                    && x.EndTime != null)
