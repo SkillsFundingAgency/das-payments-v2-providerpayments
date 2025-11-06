@@ -10,9 +10,9 @@
 
   <ItemGroup>
     <PackageReference Include="AutoMapper" Version="7.0.1" />
-    <PackageReference Include="SFA.DAS.Payments.Messages.Common" Version="2.0.7-prerelease-35" />
-    <PackageReference Include="SFA.DAS.Payments.Model.Core" Version="2.0.7-prerelease-35" />
-    <PackageReference Include="SFA.DAS.Payments.Audit.Model" Version="0.1.15-prerelease-435" />
-    <PackageReference Include="SFA.DAS.Payments.FundingSource.Model" Version="0.2.0-prerelease-60" />
+    <PackageReference Include="SFA.DAS.Payments.Messages.Common" Version="2.2.2" />
+    <PackageReference Include="SFA.DAS.Payments.Model.Core" Version="2.2.2" />
+    <PackageReference Include="SFA.DAS.Payments.Audit.Model" Version="0.1.149" />
+    <PackageReference Include="SFA.DAS.Payments.FundingSource.Model" Version="1.2.1" />
   </ItemGroup>
 </Project>

@@ -32,16 +32,16 @@
     <PackageReference Include="Microsoft.ServiceFabric.Diagnostics.Internal" Version="7.0.1010" />
     <PackageReference Include="NServiceBus" Version="8.1.1" />
 
-    <PackageReference Include="SFA.DAS.Payments.Application" Version="2.0.7-prerelease-35" />
-    <PackageReference Include="SFA.DAS.Payments.Core" Version="2.0.7-prerelease-35" />
-    <PackageReference Include="SFA.DAS.Payments.EarningEvents.Messages" Version="2.0.0-prerelease-17" />
-    <PackageReference Include="SFA.DAS.Payments.Monitoring.Jobs.Client" Version="0.2.1-prerelease-939" />
-    <PackageReference Include="SFA.DAS.Payments.Monitoring.Jobs.Data" Version="0.2.1-prerelease-939" />
-    <PackageReference Include="SFA.DAS.Payments.ServiceFabric.Core" Version="2.0.3-prerelease-5" />
+    <PackageReference Include="SFA.DAS.Payments.Application" Version="2.2.2" />
+    <PackageReference Include="SFA.DAS.Payments.Core" Version="2.2.2" />
+    <PackageReference Include="SFA.DAS.Payments.EarningEvents.Messages" Version="2.0.1" />
+    <PackageReference Include="SFA.DAS.Payments.Monitoring.Jobs.Client" Version="2.0.6" />
+    <PackageReference Include="SFA.DAS.Payments.Monitoring.Jobs.Data" Version="2.0.6" />
+    <PackageReference Include="SFA.DAS.Payments.ServiceFabric.Core" Version="2.0.5" />
 
-    <PackageReference Include="SFA.DAS.Payments.Audit.Model" Version="0.1.15-prerelease-436" />
-    <PackageReference Include="SFA.DAS.Payments.Audit.Application.ServiceFabric" Version="0.1.15-prerelease-436" />
-    <PackageReference Include="SFA.DAS.Payments.Audit.Application" Version="0.1.15-prerelease-436" />
+    <PackageReference Include="SFA.DAS.Payments.Audit.Model" Version="0.1.149" />
+    <PackageReference Include="SFA.DAS.Payments.Audit.Application.ServiceFabric" Version="0.1.149" />
+    <PackageReference Include="SFA.DAS.Payments.Audit.Application" Version="0.1.149" />
   </ItemGroup>
 
   <ItemGroup>
