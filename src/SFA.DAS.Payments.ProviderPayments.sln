@@ -27,6 +27,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SFA.DAS.Payments.ProviderPa
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{30D01D38-C3CA-480A-8040-472AC4636C8F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SFA.DAS.Payments.ProviderPayments.ProviderPaymentsService.UnitTests", "SFA.DAS.Payments.ProviderPayments.ProviderPaymentsService.UnitTests\SFA.DAS.Payments.ProviderPayments.ProviderPaymentsService.UnitTests.csproj", "{3CD034EB-5687-4AC4-4B79-73DE35AEF978}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -119,6 +121,14 @@ Global
 		{86344845-49A9-472A-944C-1165D804034C}.Release|Any CPU.Build.0 = Release|Any CPU
 		{86344845-49A9-472A-944C-1165D804034C}.Release|x64.ActiveCfg = Release|Any CPU
 		{86344845-49A9-472A-944C-1165D804034C}.Release|x64.Build.0 = Release|Any CPU
+		{3CD034EB-5687-4AC4-4B79-73DE35AEF978}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3CD034EB-5687-4AC4-4B79-73DE35AEF978}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3CD034EB-5687-4AC4-4B79-73DE35AEF978}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{3CD034EB-5687-4AC4-4B79-73DE35AEF978}.Debug|x64.Build.0 = Debug|Any CPU
+		{3CD034EB-5687-4AC4-4B79-73DE35AEF978}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3CD034EB-5687-4AC4-4B79-73DE35AEF978}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3CD034EB-5687-4AC4-4B79-73DE35AEF978}.Release|x64.ActiveCfg = Release|Any CPU
+		{3CD034EB-5687-4AC4-4B79-73DE35AEF978}.Release|x64.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -135,5 +145,9 @@ Global
 		{A422CF29-6BBE-4612-BF8E-3D09F02D50B2} = {30D01D38-C3CA-480A-8040-472AC4636C8F}
 		{86344845-49A9-472A-944C-1165D804034C} = {EAFD9825-C8C6-4804-AB55-3CF2C5B72578}
 		{30D01D38-C3CA-480A-8040-472AC4636C8F} = {EAFD9825-C8C6-4804-AB55-3CF2C5B72578}
+		{3CD034EB-5687-4AC4-4B79-73DE35AEF978} = {30D01D38-C3CA-480A-8040-472AC4636C8F}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {D7DDF4F4-9B2F-47CA-9E0F-34A13B25DD8C}
 	EndGlobalSection
 EndGlobal
