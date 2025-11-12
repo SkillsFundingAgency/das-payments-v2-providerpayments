@@ -2,6 +2,8 @@
 using NServiceBus;
 using SFA.DAS.Payments.Application.Repositories;
 using SFA.DAS.Payments.EarningEvents.Messages.Events;
+using SFA.DAS.Payments.Monitoring.Jobs.Client;
+using SFA.DAS.Payments.Monitoring.Jobs.Client.Infrastructure.Ioc;
 using SFA.DAS.Payments.ProviderPayments.Application.Services;
 using SFA.DAS.Payments.ProviderPayments.ProviderPaymentsService.Cache;
 
@@ -11,6 +13,8 @@ namespace SFA.DAS.Payments.ProviderPayments.ProviderPaymentsService.Infrastructu
     {
         protected override void Load(ContainerBuilder builder)
         {
+            builder.RegisterModule<JobStatusClientModule>();
+
             builder.RegisterType<DasEndpointFactory>()
                    .As<IDasEndpointFactory>()
                    .SingleInstance();
