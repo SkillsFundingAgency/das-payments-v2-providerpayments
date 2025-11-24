@@ -8,6 +8,7 @@ using SFA.DAS.Payments.Application.Infrastructure.Ioc;
 using SFA.DAS.Payments.Application.Infrastructure.Logging;
 using SFA.DAS.Payments.Application.Messaging;
 using SFA.DAS.Payments.Core.Configuration;
+using SFA.DAS.Payments.Monitoring.Jobs.Client;
 using SFA.DAS.Payments.ProviderPayments.Messages;
 
 namespace SFA.DAS.Payments.ProviderPayments.ProviderPaymentsService.Infrastructure
@@ -89,7 +90,7 @@ namespace SFA.DAS.Payments.ProviderPayments.ProviderPaymentsService.Infrastructu
             endpointConfiguration.RegisterComponents(cfg => cfg.RegisterSingleton(logger));
             endpointConfiguration.RegisterComponents(cfg => cfg.RegisterSingleton(lifetimeScope.Resolve<IContainerScopeFactory>()));
             endpointConfiguration.RegisterComponents(cfg => cfg.RegisterSingleton(lifetimeScope.Resolve<IEndpointInstanceFactory>()));
-            
+            endpointConfiguration.RegisterComponents(cfg => cfg.RegisterSingleton(lifetimeScope.Resolve<IJobMessageClientFactory>()));
             return endpointConfiguration;
         }
     }
