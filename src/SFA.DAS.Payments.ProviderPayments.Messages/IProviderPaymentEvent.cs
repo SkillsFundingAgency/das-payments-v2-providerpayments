@@ -8,5 +8,8 @@ namespace SFA.DAS.Payments.ProviderPayments.Messages
         TransactionType TransactionType { get; }
         FundingSourceType FundingSourceType { get; }  //Backwards Compatibility
         decimal SfaContributionPercentage { get; }
+        CourseType? CourseType { get; set; }
+        LearningType? LearningType { get; set; }
+        string CourseCode { get; set; }
     }
 }
