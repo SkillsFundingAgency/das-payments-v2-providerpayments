@@ -14,5 +14,8 @@ namespace SFA.DAS.Payments.ProviderPayments.Model
         public string ReportingAimFundingLineType { get; set; }
         public int? AgeAtStartOfLearning { get; set; }
         public FundingPlatformType FundingPlatformType { get; set;}
+        public CourseType? CourseType { get; set; }
+        public LearningType? LearningType { get; set; }
+        public string CourseCode { get; set; }
     }
 }
