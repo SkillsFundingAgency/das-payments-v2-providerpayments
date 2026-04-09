@@ -52,5 +52,22 @@ namespace SFA.DAS.Payments.ProviderPayments.Application.UnitTests.Mapping
 
             providerPayment.ReportingAimFundingLineType.Should().StartWith(expected);
         }
+
+        [Test]
+        [TestCase(ContractType.Act1, ApprenticeshipEmployerType.Levy, "16-18 Apprenticeship (From May 2017) Levy Contract", "16-18 Apprenticeship (From May 2017) Levy Contract")]
+        public void ShouldSetReportingAimFundingLineTypeToFundingLineTypeIfShortCourse(ContractType contractType, ApprenticeshipEmployerType employerType, string fundingLineType, string expected)
+        {
+            var fundingSourceEvent = new EmployerCoInvestedFundingSourcePaymentEvent
+            {
+                ContractType = contractType,
+                LearningAim = new LearningAim { FundingLineType = fundingLineType },
+                ApprenticeshipEmployerType = employerType,
+                CourseType = CourseType.ShortCourse
+            };
+
+            var providerPayment = mapper.Map<ProviderPaymentEventModel>(fundingSourceEvent);
+
+            providerPayment.ReportingAimFundingLineType.Should().Be(expected);
+        }
     }
 }
