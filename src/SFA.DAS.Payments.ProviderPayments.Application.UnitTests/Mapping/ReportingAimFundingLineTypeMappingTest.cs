@@ -54,7 +54,8 @@ namespace SFA.DAS.Payments.ProviderPayments.Application.UnitTests.Mapping
         }
 
         [Test]
-        [TestCase(ContractType.Act1, ApprenticeshipEmployerType.Levy, "16-18 Apprenticeship (From May 2017) Levy Contract", "16-18 Apprenticeship (From May 2017) Levy Contract")]
+        [TestCase(ContractType.Act1, ApprenticeshipEmployerType.Levy, "GSO Short Courses (Apprenticeship Units) Levy", "GSO Short Courses (Apprenticeship Units) Levy")]
+        [TestCase(ContractType.Act1, ApprenticeshipEmployerType.NonLevy, "GSO Short Courses (Apprenticeship Units) Non-Levy", "GSO Short Courses (Apprenticeship Units) Non-Levy")]
         public void ShouldSetReportingAimFundingLineTypeToFundingLineTypeIfShortCourse(ContractType contractType, ApprenticeshipEmployerType employerType, string fundingLineType, string expected)
         {
             var fundingSourceEvent = new EmployerCoInvestedFundingSourcePaymentEvent
