@@ -356,11 +356,12 @@ namespace SFA.DAS.Payments.ProviderPayments.Application.UnitTests.Mapping
         }
 
         [Test]
-        [TestCase(typeof(EmployerCoInvestedFundingSourcePaymentEvent))]
-        [TestCase(typeof(SfaCoInvestedFundingSourcePaymentEvent))]
-        [TestCase(typeof(SfaFullyFundedFundingSourcePaymentEvent))]
-        [TestCase(typeof(LevyFundingSourcePaymentEvent))]
-        public void EventModelEarningsInfoShouldBeCorrect(Type fundingSourceEventType)
+        [TestCase(typeof(EmployerCoInvestedFundingSourcePaymentEvent), CourseType.Apprenticeship)]
+        [TestCase(typeof(SfaCoInvestedFundingSourcePaymentEvent), CourseType.Apprenticeship)]
+        [TestCase(typeof(SfaFullyFundedFundingSourcePaymentEvent), CourseType.FunctionalSkill)]
+        [TestCase(typeof(LevyFundingSourcePaymentEvent), CourseType.Apprenticeship)]
+        [TestCase(typeof(EmployerCoInvestedFundingSourcePaymentEvent), CourseType.ShortCourse)]
+        public void EventModelEarningsInfoShouldBeCorrect(Type fundingSourceEventType, CourseType courseType)
         {
             var fundingSourceEvent = Activator.CreateInstance(fundingSourceEventType) as FundingSourcePaymentEvent;
 
@@ -387,7 +388,7 @@ namespace SFA.DAS.Payments.ProviderPayments.Application.UnitTests.Mapping
             };
             fundingSourceEvent.AgeAtStartOfLearning = 17;
             fundingSourceEvent.FundingPlatformType = FundingPlatformType.SubmitLearnerData;
-            fundingSourceEvent.CourseType = CourseType.Apprenticeship;
+            fundingSourceEvent.CourseType = courseType;
 
             var providerPayment = Mapper.Map<ProviderPaymentEventModel>(fundingSourceEvent);
 
@@ -405,7 +406,7 @@ namespace SFA.DAS.Payments.ProviderPayments.Application.UnitTests.Mapping
             providerPayment.ClawbackSourcePaymentEventId.Should().Be(fundingSourceEvent.ClawbackSourcePaymentEventId);
             providerPayment.AgeAtStartOfLearning.Should().Be(fundingSourceEvent.AgeAtStartOfLearning);
             providerPayment.FundingPlatformType.Should().Be(fundingSourceEvent.FundingPlatformType);
-            providerPayment.CourseType.Should().Be(fundingSourceEvent.CourseType);
+            providerPayment.CourseType.Should().Be(courseType);
 
             //LearningAim
             providerPayment.LearningAimPathwayCode.Should().Be(fundingSourceEvent.LearningAim.PathwayCode);
