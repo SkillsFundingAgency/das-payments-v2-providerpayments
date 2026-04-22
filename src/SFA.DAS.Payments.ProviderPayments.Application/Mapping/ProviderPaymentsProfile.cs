@@ -61,9 +61,9 @@ namespace SFA.DAS.Payments.ProviderPayments.Application.Mapping
                 .ForMember(dest => dest.LearningAimSequenceNumber, opt => opt.MapFrom(source => source.LearningAimSequenceNumber))
                 .ForMember(dest => dest.AgeAtStartOfLearning, opt => opt.MapFrom(source => source.AgeAtStartOfLearning))
                 .ForMember(dest => dest.FundingPlatformType, opt => opt.MapFrom(source => source.FundingPlatformType))
-                .ForMember(dest => dest.CourseType, opt => opt.MapFrom(source => source.CourseType))
                 .ForMember(dest => dest.CourseCode, opt => opt.MapFrom(source => source.LearningAim.CourseCode))
                 .ForMember(dest => dest.LearningType, opt => opt.MapFrom(source => source.LearningAim.LearningType))
+                .ForMember(dest => dest.CourseType, opt => opt.MapFrom(source => ResolveCourseType(source)))
                 ;
 
             CreateMap<EmployerCoInvestedFundingSourcePaymentEvent, ProviderPaymentEventModel>();
@@ -166,6 +166,24 @@ namespace SFA.DAS.Payments.ProviderPayments.Application.Mapping
                 .ForMember(dest => dest.JobId, opt => opt.Ignore())
 
                 ;
+        }
+
+        private static CourseType? ResolveCourseType(FundingSourcePaymentEvent source)
+        {
+            //TODO: Handle nullable
+
+            if (source.CourseType != 0)
+            {
+                return source.CourseType;
+            }
+
+            return source.LearningAim.LearningType switch
+            {
+                LearningType.Apprenticeship or LearningType.FoundationApprenticeship => CourseType.Apprenticeship,
+                LearningType.FunctionalSkill => CourseType.FunctionalSkill,
+                LearningType.ApprenticeshipUnit => CourseType.ShortCourse,
+                _ => null
+            };
         }
     }
 
