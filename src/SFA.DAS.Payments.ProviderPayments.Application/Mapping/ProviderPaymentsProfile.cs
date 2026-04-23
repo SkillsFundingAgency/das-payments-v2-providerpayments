@@ -170,8 +170,6 @@ namespace SFA.DAS.Payments.ProviderPayments.Application.Mapping
 
         private static CourseType? ResolveCourseType(FundingSourcePaymentEvent source)
         {
-            //TODO: Handle nullable
-
             if (source.CourseType != 0)
             {
                 return source.CourseType;
@@ -182,7 +180,7 @@ namespace SFA.DAS.Payments.ProviderPayments.Application.Mapping
                 LearningType.Apprenticeship or LearningType.FoundationApprenticeship => CourseType.Apprenticeship,
                 LearningType.FunctionalSkill => CourseType.FunctionalSkill,
                 LearningType.ApprenticeshipUnit => CourseType.ShortCourse,
-                _ => null
+                _ => throw new InvalidOperationException($"Unsupported learning type found. Learning type: {source.LearningAim.LearningType}") 
             };
         }
     }
