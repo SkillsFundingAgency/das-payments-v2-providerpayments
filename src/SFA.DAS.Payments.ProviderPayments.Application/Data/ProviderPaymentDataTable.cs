@@ -20,6 +20,9 @@ namespace SFA.DAS.Payments.ProviderPayments.Application.Data
                 new DataColumn("LearningAimSequenceNumber", typeof(long)),
                 new DataColumn("AgeAtStartOfLearning", typeof(byte)),
                 new DataColumn("FundingPlatformType", typeof(byte)),
+                new DataColumn("CourseType", typeof(byte)),
+                new DataColumn("LearningType", typeof(byte)),
+                new DataColumn("CourseCode", typeof(string)),
             });
         }
 
@@ -79,7 +82,11 @@ namespace SFA.DAS.Payments.ProviderPayments.Application.Data
             }
             
             dataRow["FundingPlatformType"] = (byte)eventModel.FundingPlatformType;
-        
+
+            dataRow["CourseType"] = eventModel.CourseType.HasValue ? (byte)eventModel.CourseType.Value : DBNull.Value;
+            dataRow["LearningType"] = eventModel.LearningType.HasValue ? (byte)eventModel.LearningType.Value : DBNull.Value;
+            dataRow["CourseCode"] = eventModel.CourseCode;
+
             return dataRow;
         }
 
