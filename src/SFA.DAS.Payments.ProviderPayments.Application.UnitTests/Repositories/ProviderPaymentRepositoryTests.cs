@@ -61,6 +61,22 @@ namespace SFA.DAS.Payments.ProviderPayments.Application.UnitTests.Repositories
             result.ForEach(x => x.Should().Be(12345));
         }
 
+        [Test]
+        public async Task LearningTypeCourseCodeCourseTypeArePopulated()
+        {
+            var payments = CreateTestPayment();
+
+            context.Payment.AddRange(payments);
+            await context.SaveChanges();
+
+            var collectionPeriod = new CollectionPeriod { Period = 1, AcademicYear = 1920 };
+            var result = await sut.GetMonthEndAct1CompletionPaymentsForProvider(payments.First().Ukprn, collectionPeriod);
+
+            result.FirstOrDefault().LearningType.Should().Be(LearningType.ApprenticeshipUnit);
+            result.FirstOrDefault().CourseCode.Should().Be("CS101");
+            result.FirstOrDefault().CourseType.Should().Be(CourseType.ShortCourse);
+        }
+
         private IList<PaymentModel> CreateTestPayment()
         {
             return new List<PaymentModel>
@@ -99,7 +115,10 @@ namespace SFA.DAS.Payments.ProviderPayments.Application.UnitTests.Repositories
                     ApprenticeshipId = 800L,
                     ApprenticeshipEmployerType = ApprenticeshipEmployerType.Levy,
                     ReportingAimFundingLineType = "ReportingAimFundingLineType",
-                    ContractType = ContractType.Act1
+                    ContractType = ContractType.Act1,
+                    CourseCode = "CS101",
+                    LearningType = LearningType.ApprenticeshipUnit,
+                    CourseType = CourseType.ShortCourse,
                 },
                 new PaymentModel
                 {
@@ -135,7 +154,10 @@ namespace SFA.DAS.Payments.ProviderPayments.Application.UnitTests.Repositories
                     ApprenticeshipId = 800L,
                     ApprenticeshipEmployerType = ApprenticeshipEmployerType.Levy,
                     ReportingAimFundingLineType = "ReportingAimFundingLineType",
-                    ContractType = ContractType.Act1
+                    ContractType = ContractType.Act1,
+                    CourseCode = "CS101",
+                    LearningType = LearningType.ApprenticeshipUnit,
+                    CourseType = CourseType.ShortCourse,
                 },
                 new PaymentModel
                 {
@@ -171,7 +193,10 @@ namespace SFA.DAS.Payments.ProviderPayments.Application.UnitTests.Repositories
                     ApprenticeshipId = 800L,
                     ApprenticeshipEmployerType = ApprenticeshipEmployerType.Levy,
                     ReportingAimFundingLineType = "ReportingAimFundingLineType",
-                    ContractType = ContractType.Act2
+                    ContractType = ContractType.Act2,
+                    CourseCode = "CS101",
+                    LearningType = LearningType.ApprenticeshipUnit,
+                    CourseType = CourseType.ShortCourse,
                 },
                 new PaymentModel
                 {
@@ -207,7 +232,10 @@ namespace SFA.DAS.Payments.ProviderPayments.Application.UnitTests.Repositories
                     ApprenticeshipId = 800L,
                     ApprenticeshipEmployerType = ApprenticeshipEmployerType.Levy,
                     ReportingAimFundingLineType = "ReportingAimFundingLineType",
-                    ContractType = ContractType.Act1
+                    ContractType = ContractType.Act1,
+                    CourseCode = "CS101",
+                    LearningType = LearningType.ApprenticeshipUnit,
+                    CourseType = CourseType.ShortCourse,
                 }
             };
         }
