@@ -1,4 +1,5 @@
-﻿using Bogus.DataSets;
+﻿using System.Data.SqlTypes;
+using Bogus.DataSets;
 using Microsoft.EntityFrameworkCore;
 using NUnit.Framework.Interfaces;
 using Reqnroll;
@@ -133,7 +134,11 @@ namespace SFA.DAS.Payments.ProviderPayments.Specs.StepDefinitions
                 ReportingAimFundingLineType = testSession.Learner.Course.FundingLineType,
                 SfaContributionPercentage = .95m,
                 StartDate = testSession.Learner.Course.LearningStartDate,
-                Ukprn = testSession.Provider.Ukprn
+                Ukprn = testSession.Provider.Ukprn,
+                IlrSubmissionDateTime = (DateTime?)SqlDateTime.MinValue,
+                PriceEpisodeIdentifier = string.Empty,
+                AgreementId = string.Empty,
+                EventTime = DateTime.UtcNow,
             });
             await testSession.DataContext.SaveChangesAsync();
         }
@@ -188,7 +193,9 @@ namespace SFA.DAS.Payments.ProviderPayments.Specs.StepDefinitions
                 TransactionType = transactionType,
                 SfaContributionPercentage = .95m,
                 TransferSenderAccountId = 0,
-                Ukprn = testSession.Provider.Ukprn
+                Ukprn = testSession.Provider.Ukprn,
+                PriceEpisodeIdentifier = string.Empty,
+                IlrSubmissionDateTime = (DateTime)SqlDateTime.MinValue
             };
             Console.WriteLine($"Sending the funding source event for the milestone payment.  Event: {fundingSourceEvent.EventId}");
             await testSession.Pv2MessageContext.Send(fundingSourceEvent);
@@ -244,7 +251,9 @@ namespace SFA.DAS.Payments.ProviderPayments.Specs.StepDefinitions
                 TransactionType = transactionType,
                 SfaContributionPercentage = .95m,
                 TransferSenderAccountId = 0,
-                Ukprn = testSession.Provider.Ukprn
+                Ukprn = testSession.Provider.Ukprn,
+                PriceEpisodeIdentifier = string.Empty,
+                IlrSubmissionDateTime = (DateTime)SqlDateTime.MinValue
             };
             Console.WriteLine($"Sending the funding source event for the milestone payment.  Event: {fundingSourceEvent.EventId}");
             await testSession.Pv2MessageContext.Send(fundingSourceEvent);
@@ -300,7 +309,9 @@ namespace SFA.DAS.Payments.ProviderPayments.Specs.StepDefinitions
                 TransactionType = transactionType,
                 SfaContributionPercentage = .95m,
                 TransferSenderAccountId = 0,
-                Ukprn = testSession.Provider.Ukprn
+                Ukprn = testSession.Provider.Ukprn,
+                PriceEpisodeIdentifier = string.Empty,
+                IlrSubmissionDateTime = (DateTime)SqlDateTime.MinValue
             };
             Console.WriteLine($"Sending the funding source event for the milestone payment.  Event: {fundingSourceEvent.EventId}");
             await testSession.Pv2MessageContext.Send(fundingSourceEvent);
@@ -313,7 +324,6 @@ namespace SFA.DAS.Payments.ProviderPayments.Specs.StepDefinitions
             {
                 var foundPreviousPayments = await testSession.DataContext.Payment.AnyAsync(p =>
                         p.LearnerUln == testSession.Learner.Uln &&
-                        p.JobId == testSession.JobId &&
                         p.CourseCode == testSession.Learner.Course.CourseCode &&
                         p.CourseType == testSession.Learner.Course.CourseType &&
                         p.LearningType == testSession.Learner.Course.LearningType &&
