@@ -62,7 +62,7 @@ namespace SFA.DAS.Payments.ProviderPayments.Application.Mapping
                 .ForMember(dest => dest.AgeAtStartOfLearning, opt => opt.MapFrom(source => source.AgeAtStartOfLearning))
                 .ForMember(dest => dest.FundingPlatformType, opt => opt.MapFrom(source => source.FundingPlatformType))
                 .ForMember(dest => dest.CourseCode, opt => opt.MapFrom(source => source.LearningAim.CourseCode))
-                .ForMember(dest => dest.LearningType, opt => opt.MapFrom(source => source.LearningAim.LearningType))
+                .ForMember(dest => dest.LearningType, opt => opt.MapFrom(source => source.LearningAim.LearningType == 0 ? LearningType.Apprenticeship : source.LearningAim.LearningType))
                 .ForMember(dest => dest.CourseType, opt => opt.MapFrom(source => ResolveCourseType(source)))
                 ;
 
@@ -170,6 +170,11 @@ namespace SFA.DAS.Payments.ProviderPayments.Application.Mapping
 
         private static CourseType? ResolveCourseType(FundingSourcePaymentEvent source)
         {
+            if (source.CourseType == 0 && source.LearningAim.LearningType == 0)
+            {
+                return CourseType.Apprenticeship;
+            }
+
             if (source.CourseType != 0)
             {
                 return source.CourseType;
