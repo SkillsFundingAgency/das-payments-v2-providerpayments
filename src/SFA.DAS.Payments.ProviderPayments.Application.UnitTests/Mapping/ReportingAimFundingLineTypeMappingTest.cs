@@ -54,21 +54,20 @@ namespace SFA.DAS.Payments.ProviderPayments.Application.UnitTests.Mapping
         }
 
         [Test]
-        [TestCase(ContractType.Act1, ApprenticeshipEmployerType.Levy, "GSO Short Courses (Apprenticeship Units) Levy", "GSO Short Courses (Apprenticeship Units) Levy")]
-        [TestCase(ContractType.Act1, ApprenticeshipEmployerType.NonLevy, "GSO Short Courses (Apprenticeship Units) Non-Levy", "GSO Short Courses (Apprenticeship Units) Non-Levy")]
-        public void ShouldSetReportingAimFundingLineTypeToFundingLineTypeIfShortCourse(ContractType contractType, ApprenticeshipEmployerType employerType, string fundingLineType, string expected)
+        [TestCase( "GSO Short Courses (Apprenticeship Units) Levy")]
+        [TestCase( "GSO Short Courses (Apprenticeship Units) Non-Levy")]
+        public void ShouldSetReportingAimFundingLineTypeToFundingLineTypeIfShortCourse(string fundingLineType)
         {
             var fundingSourceEvent = new EmployerCoInvestedFundingSourcePaymentEvent
             {
-                ContractType = contractType,
+                ContractType = ContractType.Act1, //Short courses can only be Act 1
                 LearningAim = new LearningAim { FundingLineType = fundingLineType },
-                ApprenticeshipEmployerType = employerType,
                 CourseType = CourseType.ShortCourse
             };
 
             var providerPayment = mapper.Map<ProviderPaymentEventModel>(fundingSourceEvent);
 
-            providerPayment.ReportingAimFundingLineType.Should().Be(expected);
+            providerPayment.ReportingAimFundingLineType.Should().Be(fundingLineType);
         }
     }
 }
