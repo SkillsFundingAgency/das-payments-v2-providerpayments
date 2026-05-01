@@ -4,7 +4,7 @@ parameters:
 jobs:
 - job: CodeBuild
   pool:
-    name: SLD Build pool
+    name: SLD BUILD Pool - CD
   variables:
   - group: BUILD Management Resources
   - name: SolutionBaseName
@@ -76,6 +76,27 @@ jobs:
       logProjectEvents: true
       createLogFile: true
       continueOnError: true
+
+  - task: DotNetCoreCLI@2
+    displayName: 'dotnet Build ProviderPayments-Specs'
+    inputs:
+      projects: src/SFA.DAS.Payments.ProviderPayments.Specs/SFA.DAS.Payments.ProviderPayments.Specs.csproj
+      arguments: '--configuration $(BuildConfiguration)'
+
+  - task: DotNetCoreCLI@2
+    displayName: 'dotnet publish'
+    inputs:
+      command: publish
+      publishWebProjects: false
+      projects: src/SFA.DAS.Payments.ProviderPayments.Specs/SFA.DAS.Payments.ProviderPayments.Specs.csproj
+      arguments: '--configuration $(BuildConfiguration) --output $(build.artifactstagingdirectory)\Specs'
+      modifyOutputPath: false
+  
+  - task: PublishPipelineArtifact@1
+    displayName: 'Publish Pipeline Artifact'
+    inputs:
+      targetPath: '$(build.artifactstagingdirectory)\Specs'
+      artifact: Specs
 
   - task: DeleteFiles@1
     displayName: 'Delete Symbols files from Artifact Folder '
