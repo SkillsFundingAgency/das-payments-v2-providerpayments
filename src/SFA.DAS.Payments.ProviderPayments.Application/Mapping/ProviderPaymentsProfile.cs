@@ -63,7 +63,7 @@ namespace SFA.DAS.Payments.ProviderPayments.Application.Mapping
                 .ForMember(dest => dest.FundingPlatformType, opt => opt.MapFrom(source => source.FundingPlatformType))
                 .ForMember(dest => dest.CourseCode, opt => opt.MapFrom(source => source.LearningAim.CourseCode))
                 .ForMember(dest => dest.LearningType, opt => opt.MapFrom(source => source.LearningAim.LearningType == 0 ? LearningType.Apprenticeship : source.LearningAim.LearningType))
-                .ForMember(dest => dest.CourseType, opt => opt.MapFrom(source => ResolveCourseType(source)))
+                .ForMember(dest => dest.CourseType, opt => opt.MapFrom(source => ResolveCourseType(source.CourseType, source.LearningAim.LearningType)))
                 ;
 
             CreateMap<EmployerCoInvestedFundingSourcePaymentEvent, ProviderPaymentEventModel>();
@@ -162,30 +162,33 @@ namespace SFA.DAS.Payments.ProviderPayments.Application.Mapping
                 .ForMember(dest => dest.ApprenticeshipEmployerType, opt => opt.MapFrom(source => source.ApprenticeshipEmployerType))
                 .ForMember(dest => dest.ReportingAimFundingLineType, opt => opt.MapFrom(source => source.ReportingAimFundingLineType))
                 .ForMember(dest => dest.ContractType, opt => opt.MapFrom(source => source.ContractType))
+                .ForMember(dest => dest.CourseCode, opt => opt.MapFrom(source => source.CourseCode))
+                .ForMember(dest => dest.CourseType, opt => opt.MapFrom(source => ResolveCourseType(source.CourseType.Value, source.LearningType.Value)))
+                .ForMember(dest => dest.LearningType, opt => opt.MapFrom(source => source.LearningType == 0 ? LearningType.Apprenticeship : source.LearningType))
                 /*.ForAllOtherMembers(dest => dest.Ignore()) - Need to explicitly ignore unwanted properties*/
                 .ForMember(dest => dest.JobId, opt => opt.Ignore())
 
                 ;
         }
 
-        private static CourseType? ResolveCourseType(FundingSourcePaymentEvent source)
+        private static CourseType? ResolveCourseType(CourseType courseType, LearningType learningType)
         {
-            if (source.CourseType == 0 && source.LearningAim.LearningType == 0)
+            if (courseType == 0 && learningType == 0)
             {
                 return CourseType.Apprenticeship;
             }
 
-            if (source.CourseType != 0)
+            if (courseType != 0)
             {
-                return source.CourseType;
+                return courseType;
             }
 
-            return source.LearningAim.LearningType switch
+            return learningType switch
             {
                 LearningType.Apprenticeship or LearningType.FoundationApprenticeship => CourseType.Apprenticeship,
                 LearningType.FunctionalSkill => CourseType.FunctionalSkill,
                 LearningType.ApprenticeshipUnit => CourseType.ShortCourse,
-                _ => throw new InvalidOperationException($"Unsupported learning type found. Learning type: {source.LearningAim.LearningType}") 
+                _ => throw new InvalidOperationException($"Unsupported learning type found. Learning type: {learningType}")
             };
         }
     }
