@@ -4,7 +4,6 @@ using System.Threading.Tasks;
 using SFA.DAS.Payments.Application.Infrastructure.Logging;
 using SFA.DAS.Payments.EarningEvents.Messages.Events;
 using SFA.DAS.Payments.ProviderPayments.Application.Repositories;
-using SFA.DAS.Payments.ProviderPayments.Application.Validators;
 using UUIDNext.Tools;
 
 namespace SFA.DAS.Payments.ProviderPayments.Application.Services;
@@ -19,22 +18,18 @@ public class DASEarningsReceivedEventService : IDASEarningsReceivedEventService
 {
     private readonly IPaymentLogger _paymentLogger;
     private readonly IProviderPaymentsRepository _providerPaymentsRepository;
-    private readonly IDASEarningsReceivedEventValidator _dasEarningsReceivedEventValidator;
 
     public DASEarningsReceivedEventService(
         IProviderPaymentsRepository providerPaymentsRepository,
-        IPaymentLogger paymentLogger,
-        IDASEarningsReceivedEventValidator dasEarningsReceivedEventValidator)
+        IPaymentLogger paymentLogger)
     {
         _providerPaymentsRepository = providerPaymentsRepository;
         _paymentLogger = paymentLogger;
-        _dasEarningsReceivedEventValidator = dasEarningsReceivedEventValidator;
     }
 
     public async Task RemovePreviousEarningsInCurrentCollection(DasEarningsReceivedEvent message,
         CancellationToken cancellationToken)
     {
-        _dasEarningsReceivedEventValidator.Validate(message);
         var courseCode = message.CourseCode;
         var academicYear = message.CollectionPeriod.AcademicYear;
         var period = message.CollectionPeriod.Period;
