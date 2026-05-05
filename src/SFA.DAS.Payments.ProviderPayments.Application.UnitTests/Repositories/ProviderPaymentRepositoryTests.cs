@@ -38,7 +38,7 @@ namespace SFA.DAS.Payments.ProviderPayments.Application.UnitTests.Repositories
             await context.SaveChanges();
 
             var result = await sut.GetPayments(
-                courseCode: null,
+                courseCode: "CS101",
                 academicYear: 1920,
                 period: 1,
                 ukprn: 12345,
@@ -64,7 +64,7 @@ namespace SFA.DAS.Payments.ProviderPayments.Application.UnitTests.Repositories
             await context.SaveChanges();
 
             var result = await sut.GetPayments(
-                courseCode: null,
+                courseCode: "CS101",
                 academicYear: 2021,
                 period: 5,
                 ukprn: 99999,
