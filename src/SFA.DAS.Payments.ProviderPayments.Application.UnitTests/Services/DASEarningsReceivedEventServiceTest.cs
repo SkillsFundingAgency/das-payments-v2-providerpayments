@@ -12,7 +12,6 @@ using SFA.DAS.Payments.Model.Core;
 using SFA.DAS.Payments.Model.Core.Entities;
 using SFA.DAS.Payments.ProviderPayments.Application.Repositories;
 using SFA.DAS.Payments.ProviderPayments.Application.Services;
-using SFA.DAS.Payments.ProviderPayments.Application.Validators;
 
 namespace SFA.DAS.Payments.ProviderPayments.Application.UnitTests.Services
 {
@@ -21,7 +20,6 @@ namespace SFA.DAS.Payments.ProviderPayments.Application.UnitTests.Services
     {
         private Mock<IProviderPaymentsRepository> providerPaymentsRepository;
         private Mock<IPaymentLogger> paymentLogger;
-        private Mock<IDASEarningsReceivedEventValidator> dasEarningsReceivedEventValidator;
         private DASEarningsReceivedEventService service;
 
         private DasEarningsReceivedEvent message;
@@ -45,9 +43,6 @@ namespace SFA.DAS.Payments.ProviderPayments.Application.UnitTests.Services
         {
             providerPaymentsRepository = new Mock<IProviderPaymentsRepository>();
             paymentLogger = new Mock<IPaymentLogger>();
-            dasEarningsReceivedEventValidator = new Mock<IDASEarningsReceivedEventValidator>();
-            dasEarningsReceivedEventValidator.Setup(x => x.Validate(It.IsAny<DasEarningsReceivedEvent>()))
-                .Returns(true);
 
             message = new DasEarningsReceivedEvent
             {
@@ -67,25 +62,8 @@ namespace SFA.DAS.Payments.ProviderPayments.Application.UnitTests.Services
             matchingExistingPayment = new PaymentModel { EarningEventId = messageGuid };
             newerExistingPayment = new PaymentModel { EarningEventId = newExistingGuid };
 
-            service = new DASEarningsReceivedEventService(providerPaymentsRepository.Object, paymentLogger.Object, dasEarningsReceivedEventValidator.Object);
+            service = new DASEarningsReceivedEventService(providerPaymentsRepository.Object, paymentLogger.Object);
         }
-
-
-        [Test]
-        public async Task RemovePreviousEarningsInCurrentCollection_Should_Call_Validator()
-        {
-            // Arrange
-            providerPaymentsRepository
-                .Setup(x => x.GetPayments(CourseCode, AcademicYear, Period, Ukprn, Uln, LearningAimReference, It.IsAny<CancellationToken>()))
-                .ReturnsAsync(new List<PaymentModel>());
-
-            // Act
-            await service.RemovePreviousEarningsInCurrentCollection(message, CancellationToken.None);
-
-            // Assert
-            dasEarningsReceivedEventValidator.Verify(x => x.Validate(message), Times.Once);
-        }
-
 
         [Test]
         public async Task RemovePreviousEarningsInCurrentCollection_When_Payment_List_Is_Null_DeletePayment_Is_Not_Called()
