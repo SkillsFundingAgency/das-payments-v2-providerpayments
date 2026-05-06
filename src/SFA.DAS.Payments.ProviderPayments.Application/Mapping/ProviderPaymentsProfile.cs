@@ -163,7 +163,7 @@ namespace SFA.DAS.Payments.ProviderPayments.Application.Mapping
                 .ForMember(dest => dest.ReportingAimFundingLineType, opt => opt.MapFrom(source => source.ReportingAimFundingLineType))
                 .ForMember(dest => dest.ContractType, opt => opt.MapFrom(source => source.ContractType))
                 .ForMember(dest => dest.CourseCode, opt => opt.MapFrom(source => source.CourseCode))
-                .ForMember(dest => dest.CourseType, opt => opt.MapFrom(source => ResolveCourseType(source.CourseType.Value, source.LearningType.Value)))
+                .ForMember(dest => dest.CourseType, opt => opt.MapFrom(source => ResolveCourseType(source.CourseType.GetValueOrDefault(), source.LearningType.GetValueOrDefault())))
                 .ForMember(dest => dest.LearningType, opt => opt.MapFrom(source => source.LearningType == 0 ? LearningType.Apprenticeship : source.LearningType))
                 /*.ForAllOtherMembers(dest => dest.Ignore()) - Need to explicitly ignore unwanted properties*/
                 .ForMember(dest => dest.JobId, opt => opt.Ignore())
