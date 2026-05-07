@@ -12,6 +12,8 @@
     <PackageReference Include="MSTest.TestFramework" Version="1.3.2" />
     <PackageReference Include="NUnit" Version="4.3.2" />
     <PackageReference Include="NUnit3TestAdapter" Version="5.0.0" />
+    <PackageReference Include="SFA.DAS.Payments.FundingSource.Model" Version="1.2.5-prerelease-20" />
+    <PackageReference Include="SFA.DAS.Payments.Model.Core" Version="2.4.1-prerelease-59" />
   </ItemGroup>
 
   <ItemGroup>

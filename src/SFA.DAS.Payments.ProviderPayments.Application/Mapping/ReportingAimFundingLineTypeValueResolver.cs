@@ -16,6 +16,11 @@ namespace SFA.DAS.Payments.ProviderPayments.Application.Mapping
             if (employerType != ApprenticeshipEmployerType.NonLevy && employerType != ApprenticeshipEmployerType.Levy)
                 return $"None (unknown employer type {employerType})";
 
+            if (source.CourseType == CourseType.ShortCourse)
+            {
+                return fundingLineType;
+            }
+
             if (contractType == ContractType.Act1)
             {
                 switch (fundingLineType)

@@ -88,7 +88,7 @@ namespace SFA.DAS.Payments.ProviderPayments.Application.UnitTests.Mapping
             payment.LearningAim.StandardCode.Should().Be(paymentModel.LearningAimStandardCode);
             payment.LearningAim.FundingLineType.Should().Be(paymentModel.LearningAimFundingLineType);
             payment.LearningAim.StartDate.Should().Be(paymentModel.LearningStartDate.GetValueOrDefault());
-            payment.IlrSubmissionDateTime.Should().Be(paymentModel.IlrSubmissionDateTime);
+            payment.IlrSubmissionDateTime.Should().Be(paymentModel.IlrSubmissionDateTime.GetValueOrDefault());
             payment.TransactionType.Should().Be(paymentModel.TransactionType);
             payment.SfaContributionPercentage.Should().Be(paymentModel.SfaContributionPercentage);
             payment.FundingSource.Should().Be(paymentModel.FundingSource);

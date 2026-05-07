@@ -59,7 +59,9 @@ namespace SFA.DAS.Payments.ProviderPayments.Application.UnitTests.Mapping
                     FundingLineType = "Non-DAS 16-18 Learner",
                     StandardCode = 1209,
                     ProgrammeType = 7890,
-                    Reference = "1234567-aim-ref"
+                    Reference = "1234567-aim-ref",
+                    CourseCode = "123456",
+                    LearningType = LearningType.Apprenticeship
                 },
                 IlrSubmissionDateTime = DateTime.UtcNow,
                 EventTime = DateTimeOffset.UtcNow,
@@ -68,7 +70,8 @@ namespace SFA.DAS.Payments.ProviderPayments.Application.UnitTests.Mapping
                 AccountId = 123456789,
                 ApprenticeshipEmployerType = ApprenticeshipEmployerType.Levy,
                 AgeAtStartOfLearning = 17,
-                FundingPlatformType = FundingPlatformType.SubmitLearnerData
+                FundingPlatformType = FundingPlatformType.SubmitLearnerData,
+                CourseType = CourseType.Apprenticeship
             };
             var payment = Mapper.Map<EmployerCoInvestedFundingSourcePaymentEvent, ProviderPaymentEventModel>(employerCoInvested);
             payment.Ukprn.Should().Be(employerCoInvested.Ukprn);
@@ -86,8 +89,20 @@ namespace SFA.DAS.Payments.ProviderPayments.Application.UnitTests.Mapping
             payment.ApprenticeshipEmployerType.Should().Be(employerCoInvested.ApprenticeshipEmployerType);
             payment.RequiredPaymentEventId.Should().Be(employerCoInvested.RequiredPaymentEventId);
             payment.ClawbackSourcePaymentEventId.Should().Be(employerCoInvested.ClawbackSourcePaymentEventId);
-            payment.AgeAtStartOfLearning.Should().Be(17);
-            payment.FundingPlatformType.Should().Be(FundingPlatformType.SubmitLearnerData);
+            payment.AgeAtStartOfLearning.Should().Be(employerCoInvested.AgeAtStartOfLearning);
+            payment.FundingPlatformType.Should().Be(employerCoInvested.FundingPlatformType);
+            payment.CourseType.Should().Be(employerCoInvested.CourseType);
+
+            //LearningAim
+            payment.LearningAimPathwayCode.Should().Be(employerCoInvested.LearningAim.PathwayCode);
+            payment.LearningAimFrameworkCode.Should().Be(employerCoInvested.LearningAim.FrameworkCode);
+            payment.LearningAimFundingLineType.Should().Be(employerCoInvested.LearningAim.FundingLineType);
+            payment.LearningAimStandardCode.Should().Be(employerCoInvested.LearningAim.StandardCode);
+            payment.LearningAimProgrammeType.Should().Be(employerCoInvested.LearningAim.ProgrammeType);
+            payment.LearningAimReference.Should().Be(employerCoInvested.LearningAim.Reference);
+            payment.CourseCode.Should().Be(employerCoInvested.LearningAim.CourseCode);
+            payment.LearningType.Should().Be(employerCoInvested.LearningAim.LearningType);
+
         }
 
         [Test]
@@ -116,7 +131,9 @@ namespace SFA.DAS.Payments.ProviderPayments.Application.UnitTests.Mapping
                     FundingLineType = "Non-DAS 16-18 Learner",
                     StandardCode = 1209,
                     ProgrammeType = 7890,
-                    Reference = "1234567-aim-ref"
+                    Reference = "1234567-aim-ref",
+                    CourseCode = "123456",
+                    LearningType = LearningType.Apprenticeship
                 },
                 IlrSubmissionDateTime = DateTime.UtcNow,
                 EventTime = DateTimeOffset.UtcNow,
@@ -126,7 +143,8 @@ namespace SFA.DAS.Payments.ProviderPayments.Application.UnitTests.Mapping
                 AccountId = 123456789,
                 ApprenticeshipEmployerType = ApprenticeshipEmployerType.NonLevy,
                 AgeAtStartOfLearning = 17,
-                FundingPlatformType = FundingPlatformType.SubmitLearnerData
+                FundingPlatformType = FundingPlatformType.SubmitLearnerData,
+                CourseType = CourseType.Apprenticeship
             };
 
             var payment = Mapper.Map<ProviderPaymentEventModel>(levy);
@@ -145,8 +163,19 @@ namespace SFA.DAS.Payments.ProviderPayments.Application.UnitTests.Mapping
             payment.ApprenticeshipEmployerType.Should().Be(levy.ApprenticeshipEmployerType);
             payment.RequiredPaymentEventId.Should().Be(levy.RequiredPaymentEventId);
             payment.ClawbackSourcePaymentEventId.Should().Be(levy.ClawbackSourcePaymentEventId);
-            payment.AgeAtStartOfLearning.Should().Be(17);
-            payment.FundingPlatformType.Should().Be(FundingPlatformType.SubmitLearnerData);
+            payment.AgeAtStartOfLearning.Should().Be(levy.AgeAtStartOfLearning);
+            payment.FundingPlatformType.Should().Be(levy.FundingPlatformType);
+            payment.CourseType.Should().Be(levy.CourseType);
+
+            //LearningAim
+            payment.LearningAimPathwayCode.Should().Be(levy.LearningAim.PathwayCode);
+            payment.LearningAimFrameworkCode.Should().Be(levy.LearningAim.FrameworkCode);
+            payment.LearningAimFundingLineType.Should().Be(levy.LearningAim.FundingLineType);
+            payment.LearningAimStandardCode.Should().Be(levy.LearningAim.StandardCode);
+            payment.LearningAimProgrammeType.Should().Be(levy.LearningAim.ProgrammeType);
+            payment.LearningAimReference.Should().Be(levy.LearningAim.Reference);
+            payment.CourseCode.Should().Be(levy.LearningAim.CourseCode);
+            payment.LearningType.Should().Be(levy.LearningAim.LearningType);
         }
 
         [Test]
@@ -175,7 +204,9 @@ namespace SFA.DAS.Payments.ProviderPayments.Application.UnitTests.Mapping
                     FundingLineType = "Non-DAS 16-18 Learner",
                     StandardCode = 1209,
                     ProgrammeType = 7890,
-                    Reference = "1234567-aim-ref"
+                    Reference = "1234567-aim-ref",
+                    CourseCode = "123456",
+                    LearningType = LearningType.Apprenticeship
                 },
                 IlrSubmissionDateTime = DateTime.UtcNow,
                 EventTime = DateTimeOffset.UtcNow,
@@ -185,7 +216,8 @@ namespace SFA.DAS.Payments.ProviderPayments.Application.UnitTests.Mapping
                 AccountId = 123456789,
                 ApprenticeshipEmployerType = ApprenticeshipEmployerType.Levy,
                 AgeAtStartOfLearning = 17,
-                FundingPlatformType = FundingPlatformType.SubmitLearnerData
+                FundingPlatformType = FundingPlatformType.SubmitLearnerData,
+                CourseType = CourseType.Apprenticeship
             };
 
             var payment = Mapper.Map<ProviderPaymentEventModel>(transfer);
@@ -204,8 +236,19 @@ namespace SFA.DAS.Payments.ProviderPayments.Application.UnitTests.Mapping
             payment.ApprenticeshipEmployerType.Should().Be(transfer.ApprenticeshipEmployerType);
             payment.RequiredPaymentEventId.Should().Be(transfer.RequiredPaymentEventId);
             payment.ClawbackSourcePaymentEventId.Should().Be(transfer.ClawbackSourcePaymentEventId);
-            payment.AgeAtStartOfLearning.Should().Be(17);
-            payment.FundingPlatformType.Should().Be(FundingPlatformType.SubmitLearnerData);
+            payment.AgeAtStartOfLearning.Should().Be(transfer.AgeAtStartOfLearning);
+            payment.FundingPlatformType.Should().Be(transfer.FundingPlatformType);
+            payment.CourseType.Should().Be(transfer.CourseType);
+
+            //LearningAim
+            payment.LearningAimPathwayCode.Should().Be(transfer.LearningAim.PathwayCode);
+            payment.LearningAimFrameworkCode.Should().Be(transfer.LearningAim.FrameworkCode);
+            payment.LearningAimFundingLineType.Should().Be(transfer.LearningAim.FundingLineType);
+            payment.LearningAimStandardCode.Should().Be(transfer.LearningAim.StandardCode);
+            payment.LearningAimProgrammeType.Should().Be(transfer.LearningAim.ProgrammeType);
+            payment.LearningAimReference.Should().Be(transfer.LearningAim.Reference);
+            payment.CourseCode.Should().Be(transfer.LearningAim.CourseCode);
+            payment.LearningType.Should().Be(transfer.LearningAim.LearningType);
         }
 
         [Test]
@@ -232,13 +275,16 @@ namespace SFA.DAS.Payments.ProviderPayments.Application.UnitTests.Mapping
                     FundingLineType = "Non-DAS 16-18 Learner",
                     StandardCode = 1209,
                     ProgrammeType = 7890,
-                    Reference = "1234567-aim-ref"
+                    Reference = "1234567-aim-ref",
+                    CourseCode = "123456",
+                    LearningType = LearningType.Apprenticeship
                 },
                 IlrSubmissionDateTime = DateTime.UtcNow,
                 EventTime = DateTimeOffset.UtcNow,
                 RequiredPaymentEventId = Guid.NewGuid(),
                 AccountId = 123456789,
-                ApprenticeshipEmployerType = ApprenticeshipEmployerType.Levy
+                ApprenticeshipEmployerType = ApprenticeshipEmployerType.Levy,
+                CourseType = CourseType.Apprenticeship
             };
             var payment = Mapper.Map<EmployerCoInvestedFundingSourcePaymentEvent, EmployerCoInvestedProviderPaymentEvent>(employerCoInvested);
             payment.Ukprn.Should().Be(employerCoInvested.Ukprn);
@@ -252,6 +298,17 @@ namespace SFA.DAS.Payments.ProviderPayments.Application.UnitTests.Mapping
             payment.JobId.Should().Be(employerCoInvested.JobId);
             payment.IlrSubmissionDateTime.Should().Be(employerCoInvested.IlrSubmissionDateTime);
             payment.ApprenticeshipEmployerType.Should().Be(employerCoInvested.ApprenticeshipEmployerType);
+            payment.CourseType.Should().Be(employerCoInvested.CourseType);
+
+            //LearningAim
+            payment.LearningAim.PathwayCode.Should().Be(employerCoInvested.LearningAim.PathwayCode);
+            payment.LearningAim.FrameworkCode.Should().Be(employerCoInvested.LearningAim.FrameworkCode);
+            payment.LearningAim.FundingLineType.Should().Be(employerCoInvested.LearningAim.FundingLineType);
+            payment.LearningAim.StandardCode.Should().Be(employerCoInvested.LearningAim.StandardCode);
+            payment.LearningAim.ProgrammeType.Should().Be(employerCoInvested.LearningAim.ProgrammeType);
+            payment.LearningAim.Reference.Should().Be(employerCoInvested.LearningAim.Reference);
+            payment.CourseCode.Should().Be(employerCoInvested.LearningAim.CourseCode);
+            payment.LearningType.Should().Be(employerCoInvested.LearningAim.LearningType);
         }
 
         [TestCase(typeof(EmployerCoInvestedFundingSourcePaymentEvent), typeof(EmployerCoInvestedProviderPaymentEvent))]
@@ -280,7 +337,9 @@ namespace SFA.DAS.Payments.ProviderPayments.Application.UnitTests.Mapping
                 FundingLineType = "Non-DAS 16-18 Learner",
                 StandardCode = 1209,
                 ProgrammeType = 7890,
-                Reference = "1234567-aim-ref"
+                Reference = "1234567-aim-ref",
+                CourseCode = "123456",
+                LearningType = LearningType.Apprenticeship
             };
             fundingSourceEvent.IlrSubmissionDateTime = DateTime.UtcNow;
             fundingSourceEvent.EventTime = DateTimeOffset.UtcNow;
@@ -289,6 +348,7 @@ namespace SFA.DAS.Payments.ProviderPayments.Application.UnitTests.Mapping
             fundingSourceEvent.AccountId = 123456789;
             fundingSourceEvent.AgeAtStartOfLearning = 17;
             fundingSourceEvent.FundingPlatformType = FundingPlatformType.SubmitLearnerData;
+            fundingSourceEvent.CourseType = CourseType.Apprenticeship;
 
             var payment = Mapper.Map<ProviderPaymentEvent>(fundingSourceEvent);
             payment.Should().NotBeNull();
@@ -296,11 +356,12 @@ namespace SFA.DAS.Payments.ProviderPayments.Application.UnitTests.Mapping
         }
 
         [Test]
-        [TestCase(typeof(EmployerCoInvestedFundingSourcePaymentEvent))]
-        [TestCase(typeof(SfaCoInvestedFundingSourcePaymentEvent))]
-        [TestCase(typeof(SfaFullyFundedFundingSourcePaymentEvent))]
-        [TestCase(typeof(LevyFundingSourcePaymentEvent))]
-        public void EventModelEarningsInfoShouldBeCorrect(Type fundingSourceEventType)
+        [TestCase(typeof(EmployerCoInvestedFundingSourcePaymentEvent), CourseType.Apprenticeship)]
+        [TestCase(typeof(SfaCoInvestedFundingSourcePaymentEvent), CourseType.Apprenticeship)]
+        [TestCase(typeof(SfaFullyFundedFundingSourcePaymentEvent), CourseType.FunctionalSkill)]
+        [TestCase(typeof(LevyFundingSourcePaymentEvent), CourseType.Apprenticeship)]
+        [TestCase(typeof(EmployerCoInvestedFundingSourcePaymentEvent), CourseType.ShortCourse)]
+        public void EventModelEarningsInfoShouldBeCorrect(Type fundingSourceEventType, CourseType courseType)
         {
             var fundingSourceEvent = Activator.CreateInstance(fundingSourceEventType) as FundingSourcePaymentEvent;
 
@@ -321,10 +382,13 @@ namespace SFA.DAS.Payments.ProviderPayments.Application.UnitTests.Mapping
                 FundingLineType = "Non-DAS 16-18 Learner",
                 StandardCode = 1209,
                 ProgrammeType = 7890,
-                Reference = "1234567-aim-ref"
+                Reference = "1234567-aim-ref",
+                CourseCode = "123456",
+                LearningType = LearningType.Apprenticeship
             };
             fundingSourceEvent.AgeAtStartOfLearning = 17;
             fundingSourceEvent.FundingPlatformType = FundingPlatformType.SubmitLearnerData;
+            fundingSourceEvent.CourseType = courseType;
 
             var providerPayment = Mapper.Map<ProviderPaymentEventModel>(fundingSourceEvent);
 
@@ -340,8 +404,19 @@ namespace SFA.DAS.Payments.ProviderPayments.Application.UnitTests.Mapping
             providerPayment.ApprenticeshipEmployerType.Should().Be(fundingSourceEvent.ApprenticeshipEmployerType);
             providerPayment.RequiredPaymentEventId.Should().Be(fundingSourceEvent.RequiredPaymentEventId);
             providerPayment.ClawbackSourcePaymentEventId.Should().Be(fundingSourceEvent.ClawbackSourcePaymentEventId);
-            providerPayment.AgeAtStartOfLearning.Should().Be(17);
-            providerPayment.FundingPlatformType.Should().Be(FundingPlatformType.SubmitLearnerData);
+            providerPayment.AgeAtStartOfLearning.Should().Be(fundingSourceEvent.AgeAtStartOfLearning);
+            providerPayment.FundingPlatformType.Should().Be(fundingSourceEvent.FundingPlatformType);
+            providerPayment.CourseType.Should().Be(courseType);
+
+            //LearningAim
+            providerPayment.LearningAimPathwayCode.Should().Be(fundingSourceEvent.LearningAim.PathwayCode);
+            providerPayment.LearningAimFrameworkCode.Should().Be(fundingSourceEvent.LearningAim.FrameworkCode);
+            providerPayment.LearningAimFundingLineType.Should().Be(fundingSourceEvent.LearningAim.FundingLineType);
+            providerPayment.LearningAimStandardCode.Should().Be(fundingSourceEvent.LearningAim.StandardCode);
+            providerPayment.LearningAimProgrammeType.Should().Be(fundingSourceEvent.LearningAim.ProgrammeType);
+            providerPayment.LearningAimReference.Should().Be(fundingSourceEvent.LearningAim.Reference);
+            providerPayment.CourseCode.Should().Be(fundingSourceEvent.LearningAim.CourseCode);
+            providerPayment.LearningType.Should().Be(fundingSourceEvent.LearningAim.LearningType);
         }
 
         [TestCase(typeof(EmployerCoInvestedProviderPaymentEvent))]
@@ -358,7 +433,10 @@ namespace SFA.DAS.Payments.ProviderPayments.Application.UnitTests.Mapping
                 CompletionStatus = 3,
                 CompletionAmount = 100M,
                 InstalmentAmount = 200M,
-                NumberOfInstalments = 5
+                NumberOfInstalments = 5,
+                CourseType = CourseType.Apprenticeship,
+                CourseCode = "123456",
+                LearningType = LearningType.Apprenticeship
             };
 
             var providerPayment = Activator.CreateInstance(providerPaymentEventType) as ProviderPaymentEvent;
@@ -372,6 +450,59 @@ namespace SFA.DAS.Payments.ProviderPayments.Application.UnitTests.Mapping
             providerPayment.CompletionAmount.Should().Be(providerPaymentEvent.CompletionAmount);
             providerPayment.InstalmentAmount.Should().Be(providerPaymentEvent.InstalmentAmount);
             providerPayment.NumberOfInstalments.Should().Be(providerPaymentEvent.NumberOfInstalments);
+            providerPayment.CourseType.Should().Be(providerPaymentEvent.CourseType);
+            providerPayment.LearningAim.CourseCode.Should().Be(providerPaymentEvent.CourseCode);
+            providerPayment.LearningAim.LearningType.Should().Be(providerPaymentEvent.LearningType);
+        }
+
+
+        [TestCase(LearningType.Apprenticeship, CourseType.Apprenticeship)]
+        [TestCase(LearningType.FoundationApprenticeship, CourseType.Apprenticeship)]
+        [TestCase(LearningType.FunctionalSkill, CourseType.FunctionalSkill)]
+        [TestCase(LearningType.ApprenticeshipUnit, CourseType.ShortCourse)]
+        public void MapsCourseTypeFromFundingSourceEventToProviderPayment(LearningType learningType, CourseType expectedCourseType)
+        {
+            var agreementId = "AGREEMENT";
+
+            var transfer = new TransferFundingSourcePaymentEvent
+            {
+                EventId = Guid.NewGuid(),
+                CollectionPeriod = new CollectionPeriod { Period = 12, AcademicYear = 1819 },
+                Learner = new Learner { ReferenceNumber = "1234-ref", Uln = 123456 },
+                TransactionType = TransactionType.Completion,
+                Ukprn = 12345,
+                ContractType = ContractType.Act1,
+                SfaContributionPercentage = 0.9m,
+                PriceEpisodeIdentifier = "pe-1",
+                JobId = 123,
+                AmountDue = 300,
+                FundingSourceType = FundingSourceType.CoInvestedEmployer,
+                DeliveryPeriod = 12,
+                LearningAim = new LearningAim
+                {
+                    PathwayCode = 12,
+                    FrameworkCode = 1245,
+                    FundingLineType = "Non-DAS 16-18 Learner",
+                    StandardCode = 1209,
+                    ProgrammeType = 7890,
+                    Reference = "1234567-aim-ref",
+                    CourseCode = "123456",
+                    LearningType = learningType
+                },
+                IlrSubmissionDateTime = DateTime.UtcNow,
+                EventTime = DateTimeOffset.UtcNow,
+                AgreementId = agreementId,
+                RequiredPaymentEventId = Guid.NewGuid(),
+                ClawbackSourcePaymentEventId = Guid.NewGuid(),
+                AccountId = 123456789,
+                ApprenticeshipEmployerType = ApprenticeshipEmployerType.Levy,
+                AgeAtStartOfLearning = 17,
+                FundingPlatformType = FundingPlatformType.SubmitLearnerData,
+                CourseType = 0
+            };
+
+            var payment = Mapper.Map<ProviderPaymentEventModel>(transfer);
+            payment.CourseType.Should().Be(expectedCourseType);
         }
     }
 }

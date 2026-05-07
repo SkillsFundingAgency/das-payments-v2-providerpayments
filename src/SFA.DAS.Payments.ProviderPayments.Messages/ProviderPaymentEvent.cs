@@ -20,5 +20,8 @@ namespace SFA.DAS.Payments.ProviderPayments.Messages
         public new TransactionType TransactionType { get; set; }
         public FundingSourceType FundingSourceType { get; set; }  //Backwards Compatibility
         public decimal SfaContributionPercentage { get; set; }
+        public CourseType? CourseType { get; set; }
+        public LearningType? LearningType { get; set; }
+        public string CourseCode { get; set; }
     }
 }

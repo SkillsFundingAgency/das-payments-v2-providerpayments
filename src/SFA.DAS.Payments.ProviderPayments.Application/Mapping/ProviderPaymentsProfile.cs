@@ -61,6 +61,9 @@ namespace SFA.DAS.Payments.ProviderPayments.Application.Mapping
                 .ForMember(dest => dest.LearningAimSequenceNumber, opt => opt.MapFrom(source => source.LearningAimSequenceNumber))
                 .ForMember(dest => dest.AgeAtStartOfLearning, opt => opt.MapFrom(source => source.AgeAtStartOfLearning))
                 .ForMember(dest => dest.FundingPlatformType, opt => opt.MapFrom(source => source.FundingPlatformType))
+                .ForMember(dest => dest.CourseCode, opt => opt.MapFrom(source => source.LearningAim.CourseCode))
+                .ForMember(dest => dest.LearningType, opt => opt.MapFrom(source => source.LearningAim.LearningType == 0 ? LearningType.Apprenticeship : source.LearningAim.LearningType))
+                .ForMember(dest => dest.CourseType, opt => opt.MapFrom(source => ResolveCourseType(source)))
                 ;
 
             CreateMap<EmployerCoInvestedFundingSourcePaymentEvent, ProviderPaymentEventModel>();
@@ -112,6 +115,9 @@ namespace SFA.DAS.Payments.ProviderPayments.Application.Mapping
                 .ForMember(dest => dest.ApprenticeshipEmployerType, opt => opt.MapFrom(source => source.ApprenticeshipEmployerType))
                 .ForMember(dest => dest.ReportingAimFundingLineType, opt => opt.MapFrom(source => source.ReportingAimFundingLineType))
                 .ForMember(dest => dest.LearningAimSequenceNumber, opt => opt.MapFrom(source => source.LearningAimSequenceNumber))
+                .ForMember(dest => dest.CourseType, opt => opt.MapFrom(source => source.CourseType))
+                .AfterMap((payment, providerPaymentEvent) => providerPaymentEvent.LearningAim.CourseCode = payment.CourseCode)
+                .AfterMap((payment, providerPaymentEvent) => providerPaymentEvent.LearningAim.LearningType = payment.LearningType.HasValue ? payment.LearningType.Value : LearningType.Apprenticeship)
                 ;
 
             CreateMap<PaymentModel, EmployerCoInvestedProviderPaymentEvent>();
@@ -126,7 +132,9 @@ namespace SFA.DAS.Payments.ProviderPayments.Application.Mapping
                 .Include<SfaFullyFundedFundingSourcePaymentEvent, SfaFullyFundedProviderPaymentEvent>()
                 .Include<LevyFundingSourcePaymentEvent, LevyProviderPaymentEvent>()
                 .Include<TransferFundingSourcePaymentEvent, TransferProviderPaymentEvent>()
-                .ForMember(dest => dest.EventId, opt => opt.Ignore());
+                .ForMember(dest => dest.EventId, opt => opt.Ignore())
+                .ForMember(dest => dest.CourseCode, opt => opt.MapFrom(source => source.LearningAim.CourseCode))
+                .ForMember(dest => dest.LearningType, opt => opt.MapFrom(source => source.LearningAim.LearningType));
 
             CreateMap<EmployerCoInvestedFundingSourcePaymentEvent, EmployerCoInvestedProviderPaymentEvent>();
             CreateMap<SfaCoInvestedFundingSourcePaymentEvent, SfaCoInvestedProviderPaymentEvent>();
@@ -158,6 +166,27 @@ namespace SFA.DAS.Payments.ProviderPayments.Application.Mapping
                 .ForMember(dest => dest.JobId, opt => opt.Ignore())
 
                 ;
+        }
+
+        private static CourseType? ResolveCourseType(FundingSourcePaymentEvent source)
+        {
+            if (source.CourseType == 0 && source.LearningAim.LearningType == 0)
+            {
+                return CourseType.Apprenticeship;
+            }
+
+            if (source.CourseType != 0)
+            {
+                return source.CourseType;
+            }
+
+            return source.LearningAim.LearningType switch
+            {
+                LearningType.Apprenticeship or LearningType.FoundationApprenticeship => CourseType.Apprenticeship,
+                LearningType.FunctionalSkill => CourseType.FunctionalSkill,
+                LearningType.ApprenticeshipUnit => CourseType.ShortCourse,
+                _ => throw new InvalidOperationException($"Unsupported learning type found. Learning type: {source.LearningAim.LearningType}") 
+            };
         }
     }
 
