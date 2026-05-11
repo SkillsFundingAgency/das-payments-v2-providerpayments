@@ -183,7 +183,7 @@ namespace SFA.DAS.Payments.ProviderPayments.Application.Mapping
             return source.LearningAim.LearningType switch
             {
                 LearningType.Apprenticeship or LearningType.FoundationApprenticeship => CourseType.Apprenticeship,
-                LearningType.FunctionalSkill => CourseType.FunctionalSkill,
+                LearningType.MathsandEnglish => CourseType.FunctionalSkill,
                 LearningType.ApprenticeshipUnit => CourseType.ShortCourse,
                 _ => throw new InvalidOperationException($"Unsupported learning type found. Learning type: {source.LearningAim.LearningType}") 
             };
