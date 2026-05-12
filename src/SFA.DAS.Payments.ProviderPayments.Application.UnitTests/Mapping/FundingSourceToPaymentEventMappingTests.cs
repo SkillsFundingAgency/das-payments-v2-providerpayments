@@ -458,7 +458,7 @@ namespace SFA.DAS.Payments.ProviderPayments.Application.UnitTests.Mapping
 
         [TestCase(LearningType.Apprenticeship, CourseType.Apprenticeship)]
         [TestCase(LearningType.FoundationApprenticeship, CourseType.Apprenticeship)]
-        [TestCase(LearningType.FunctionalSkill, CourseType.FunctionalSkill)]
+        [TestCase(LearningType.MathsAndEnglish, CourseType.FunctionalSkill)]
         [TestCase(LearningType.ApprenticeshipUnit, CourseType.ShortCourse)]
         public void MapsCourseTypeFromFundingSourceEventToProviderPayment(LearningType learningType, CourseType expectedCourseType)
         {
