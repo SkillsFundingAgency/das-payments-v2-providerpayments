@@ -62,7 +62,7 @@ namespace SFA.DAS.Payments.ProviderPayments.Application.UnitTests.Repositories
         }
 
         [Test]
-        public async Task LearningTypeCourseCodeCourseTypeArePopulated()
+        public async Task When_Payment_Is_Created_LearningType_CourseCode_CourseType_Are_Retrieved()
         {
             var payments = CreateTestPayment();
 

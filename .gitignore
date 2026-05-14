@@ -13,6 +13,7 @@
 src/SFA.DAS.Forecasting.Web/Web.Debug.config
 *.v3.ncrunchsolution
 *.v3.ncrunchproject
+appSettings.development.json
 
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs
@@ -288,3 +289,4 @@ local.settings.json
 src/Directory.Build.targets
 /src/SFA.DAS.Payments.Monitoring.Jobs.Application/local.settings.json
 /src/SFA.DAS.Payments.sln.startup.json
+/src/SFA.DAS.Payments.ProviderPayments.Specs/appSettings.development.json
