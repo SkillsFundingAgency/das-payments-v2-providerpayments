@@ -38,7 +38,7 @@ namespace SFA.DAS.Payments.ProviderPayments.Application.Services
 
         public async Task HandleSubmissionFailed(short academicYear, byte collectionPeriod, long ukprn, DateTime submissionTime, long jobId, CancellationToken cancellationToken)
         {
-            logger.LogVerbose($"Handling Submission Succeeded. Data: Ukprn: {ukprn}, Academic Year: {academicYear}, Collection Period: {collectionPeriod}, Submission Time {submissionTime}");
+            logger.LogVerbose($"Handling Submission Failed. Data: Ukprn: {ukprn}, Academic Year: {academicYear}, Collection Period: {collectionPeriod}, Submission Time {submissionTime}");
             await providerPaymentsRepository.DeleteCurrentMonthEndPayment(new CollectionPeriod { AcademicYear = academicYear, Period = collectionPeriod },
                 ukprn,
                 submissionTime,
