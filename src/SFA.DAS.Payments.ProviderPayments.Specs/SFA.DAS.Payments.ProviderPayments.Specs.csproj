@@ -1,0 +1,46 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFramework>net8.0</TargetFramework>
+		<Nullable>enable</Nullable>
+		<ImplicitUsings>enable</ImplicitUsings>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Bogus" Version="35.6.5" />
+		<PackageReference Include="Microsoft.Extensions.Configuration" Version="10.0.2" />
+		<PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="10.0.2" />
+		<PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.14.1" />
+		<PackageReference Include="NServiceBus" Version="9.2.10" />
+		<PackageReference Include="NServiceBus.Transport.AzureServiceBus" Version="5.1.2" />
+		<PackageReference Include="nunit" Version="4.4.0" />
+		<PackageReference Include="NUnit3TestAdapter" Version="5.1.0" />
+		<PackageReference Include="Reqnroll.NUnit" Version="3.2.0" />
+
+		<PackageReference Include="SFA.DAS.Payments.Application" Version="2.4.1-prerelease-59" />
+		<PackageReference Include="SFA.DAS.Payments.Core" Version="2.4.1-prerelease-59" />
+		<PackageReference Include="SFA.DAS.Payments.FundingSource.Messages" Version="1.2.5-prerelease-27" />
+		<PackageReference Include="SFA.DAS.Payments.Model.Core" Version="2.4.1-prerelease-59" />
+		<PackageReference Include="UUIDNext" Version="4.2.4" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<None Update="appSettings.development.json">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</None>
+		<None Update="appSettings.json">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</None>
+	</ItemGroup>
+
+
+	<ItemGroup>
+		<Folder Include="Drivers\" />
+		<Folder Include="Support\" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\SFA.DAS.Payments.ProviderPayments.Messages\SFA.DAS.Payments.ProviderPayments.Messages.csproj" />
+	</ItemGroup>
+
+</Project>

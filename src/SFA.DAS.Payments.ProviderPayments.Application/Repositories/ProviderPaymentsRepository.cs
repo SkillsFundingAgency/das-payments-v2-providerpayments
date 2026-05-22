@@ -19,6 +19,22 @@ namespace SFA.DAS.Payments.ProviderPayments.Application.Repositories
             this.dataContext = dataContext;
         }
 
+        public async Task<List<PaymentModel>> GetPayments(String courseCode, short academicYear, byte period,
+            long ukprn, long uln, string learningAimReference, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            return await dataContext.Payment
+                .Where(p =>
+                    p.Ukprn == ukprn &&
+                    p.CourseCode == courseCode &&
+                    p.CollectionPeriod.AcademicYear == academicYear &&
+                    p.CollectionPeriod.Period == period &&
+                    p.LearnerUln == uln &&
+                    p.LearningAimReference == learningAimReference
+                )
+                .OrderByDescending(p => p.IlrSubmissionDateTime)
+                .ToListAsync(cancellationToken);
+        }
+
         public async Task<List<PaymentModel>> GetMonthEndPayments(CollectionPeriod collectionPeriod, long ukprn,
             CancellationToken cancellationToken = default(CancellationToken))
         {
@@ -53,6 +69,12 @@ namespace SFA.DAS.Payments.ProviderPayments.Application.Repositories
                 .ToList();
 
             return payments;
+        }
+
+        public async Task DeletePayment(PaymentModel payment, CancellationToken cancellationToken = default(CancellationToken))
+        {
+                dataContext.Payment.Remove(payment);
+                await dataContext.SaveChanges(cancellationToken);
         }
 
         public async Task DeleteOldMonthEndPayment(CollectionPeriod collectionPeriod,
