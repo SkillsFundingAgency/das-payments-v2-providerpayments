@@ -86,7 +86,8 @@ namespace SFA.DAS.Payments.ProviderPayments.Application.Repositories
                 .Where(p => p.Ukprn == ukprn &&
                             p.CollectionPeriod.Period == collectionPeriod.Period &&
                             p.CollectionPeriod.AcademicYear == collectionPeriod.AcademicYear &&
-                            p.IlrSubmissionDateTime < currentIlrSubmissionDateTime);
+                            p.IlrSubmissionDateTime < currentIlrSubmissionDateTime &&
+                            (p.FundingPlatformType != FundingPlatformType.DigitalApprenticeshipService || p.FundingPlatformType == null));
 
             dataContext.Payment.RemoveRange(oldSubmittedIlrPayments);
             await dataContext.SaveChanges(cancellationToken);
@@ -101,7 +102,8 @@ namespace SFA.DAS.Payments.ProviderPayments.Application.Repositories
                 .Where(p => p.Ukprn == ukprn &&
                             p.CollectionPeriod.Period == collectionPeriod.Period &&
                             p.CollectionPeriod.AcademicYear == collectionPeriod.AcademicYear &&
-                            p.IlrSubmissionDateTime == currentIlrSubmissionDateTime);
+                            p.IlrSubmissionDateTime == currentIlrSubmissionDateTime &&
+                            (p.FundingPlatformType != FundingPlatformType.DigitalApprenticeshipService || p.FundingPlatformType == null));
 
             dataContext.Payment.RemoveRange(oldSubmittedIlrPayments);
             await dataContext.SaveChanges(cancellationToken);
