@@ -1,12 +1,12 @@
-﻿using System;
-using SFA.DAS.Payments.Model.Core;
+﻿using SFA.DAS.Payments.Model.Core;
 using SFA.DAS.Payments.Model.Core.Entities;
+using System;
 
 namespace SFA.DAS.Payments.ProviderPayments.Messages
 {
-    public class RecordedAct1CompletionPayment : ICompletionEvent
+    public class RecordedShortCourseCompletionPayment : ICompletionEvent
     {
-        public long JobId { get;  }
+        public long JobId { get; }
         public Guid EventId { get; set; }
         public DateTimeOffset EventTime { get; set; }
         public long Ukprn { get; set; }

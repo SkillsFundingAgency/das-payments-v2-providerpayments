@@ -169,6 +169,33 @@ namespace SFA.DAS.Payments.ProviderPayments.Application.Mapping
                 .ForMember(dest => dest.JobId, opt => opt.Ignore())
 
                 ;
+
+            CreateMap<PaymentModel, RecordedShortCourseCompletionPayment>()
+                .ForMember(dest => dest.EventId, opt => opt.MapFrom(source => Guid.NewGuid()))
+                .ForMember(dest => dest.EventTime, opt => opt.MapFrom(source => DateTimeOffset.UtcNow))
+                .ForMember(dest => dest.Ukprn, opt => opt.MapFrom(source => source.Ukprn))
+                .ForMember(dest => dest.DeliveryPeriod, opt => opt.MapFrom(source => source.DeliveryPeriod))
+                .ForMember(dest => dest.CollectionPeriod, opt => opt.MapFrom(src => CollectionPeriodFactory.CreateFromAcademicYearAndPeriod(src.CollectionPeriod.AcademicYear, src.CollectionPeriod.Period)))
+                .ForMember(dest => dest.Learner, opt => opt.MapFrom(source => LearnerFactory.Create(source)))
+                .ForMember(dest => dest.LearningAim, opt => opt.MapFrom(source => LearningAimFactory.Create(source)))
+                .ForMember(dest => dest.IlrSubmissionDateTime, opt => opt.MapFrom(source => source.IlrSubmissionDateTime))
+                .ForMember(dest => dest.TransactionType, opt => opt.MapFrom(source => source.TransactionType))
+                .ForMember(dest => dest.SfaContributionPercentage, opt => opt.MapFrom(source => source.SfaContributionPercentage))
+                .ForMember(dest => dest.FundingSource, opt => opt.MapFrom(source => source.FundingSource))
+                .ForMember(dest => dest.AmountDue, opt => opt.MapFrom(source => source.Amount))
+                .ForMember(dest => dest.AccountId, opt => opt.MapFrom(source => source.AccountId))
+                .ForMember(dest => dest.TransferSenderAccountId, opt => opt.MapFrom(source => source.TransferSenderAccountId))
+                .ForMember(dest => dest.EarningDetails, opt => opt.MapFrom(source => EarningDetailsFactory.Create(source)))
+                .ForMember(dest => dest.ApprenticeshipId, opt => opt.MapFrom(source => source.ApprenticeshipId))
+                .ForMember(dest => dest.ApprenticeshipEmployerType, opt => opt.MapFrom(source => source.ApprenticeshipEmployerType))
+                .ForMember(dest => dest.ReportingAimFundingLineType, opt => opt.MapFrom(source => source.ReportingAimFundingLineType))
+                .ForMember(dest => dest.ContractType, opt => opt.MapFrom(source => source.ContractType))
+                .ForMember(dest => dest.CourseCode, opt => opt.MapFrom(source => source.CourseCode))
+                .ForMember(dest => dest.CourseType, opt => opt.MapFrom(source => ResolveCourseType(source.CourseType.GetValueOrDefault(), source.LearningType.GetValueOrDefault())))
+                .ForMember(dest => dest.LearningType, opt => opt.MapFrom(source => source.LearningType == 0 ? LearningType.Apprenticeship : source.LearningType))
+                .ForMember(dest => dest.JobId, opt => opt.Ignore())
+
+                ;
         }
 
         private static CourseType? ResolveCourseType(CourseType courseType, LearningType learningType)

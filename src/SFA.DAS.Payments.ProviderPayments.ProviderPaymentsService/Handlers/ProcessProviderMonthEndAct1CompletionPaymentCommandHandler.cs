@@ -27,7 +27,7 @@ namespace SFA.DAS.Payments.ProviderPayments.ProviderPaymentsService.Handlers
         {
             paymentLogger.LogInfo($"Processing Provider Month End Act1 Completion Payment Command with ukprn: {message.Ukprn}, Message Id : {context.MessageId}");
 
-            var paymentEvents = await completionPaymentService.GetAct1CompletionPaymentEvents(message);
+            var paymentEvents = await completionPaymentService.GetCompletionPaymentEvents(message);
 
             if (!paymentEvents.Any())
             {
@@ -40,7 +40,7 @@ namespace SFA.DAS.Payments.ProviderPayments.ProviderPaymentsService.Handlers
 
             foreach (var paymentEvent in paymentEvents)
             {
-                paymentLogger.LogDebug($"Processing Act1 Completion Payment Event. Ukprn: {message.Ukprn}, Collection: {message.CollectionPeriod.Period:00}-{message.CollectionPeriod.AcademicYear}, job: {message.JobId}");
+                paymentLogger.LogDebug($"Processing {paymentEvent}. Ukprn: {message.Ukprn}, Collection: {message.CollectionPeriod.Period:00}-{message.CollectionPeriod.AcademicYear}, job: {message.JobId}");
 
                 await dasEndPoint.Publish(paymentEvent);
             }
