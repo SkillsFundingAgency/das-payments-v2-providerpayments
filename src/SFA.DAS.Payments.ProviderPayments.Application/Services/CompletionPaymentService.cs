@@ -38,11 +38,11 @@ namespace SFA.DAS.Payments.ProviderPayments.Application.Services
 
             var payments = await repository.GetMonthEndAct1CompletionPaymentsForProvider(message.Ukprn, message.CollectionPeriod).ConfigureAwait(false);
 
-            var recordedAct1CompletionPaymentEvents = MapPaymentsToCompletionPaymentEvents(payments);
+            var completionPaymentEvents = MapPaymentsToCompletionPaymentEvents(payments);
 
             logger.LogInfo($"Finished creating the provider period end events for collection period: {message.CollectionPeriod.Period:00}-{message.CollectionPeriod.AcademicYear:0000}, job: {message.JobId}");
 
-            return recordedAct1CompletionPaymentEvents;
+            return completionPaymentEvents;
         }
         
         public async Task<List<ProcessProviderMonthEndAct1CompletionPaymentCommand>> GenerateProviderMonthEndAct1CompletionPaymentCommands(PeriodEndStoppedEvent message)
@@ -69,9 +69,11 @@ namespace SFA.DAS.Payments.ProviderPayments.Application.Services
 
             var shortCourseCompletionPayments = payments.Where(x => x.CourseType == CourseType.ShortCourse).ToList();
             completionPaymentEvents.AddRange(mapper.Map<IList<RecordedShortCourseCompletionPayment>>(shortCourseCompletionPayments));
+            // exclude from further processing
             shortCourseCompletionPayments.ForEach(shortCoursePayment => payments.Remove(shortCoursePayment));
 
             completionPaymentEvents.AddRange(mapper.Map<IList<RecordedAct1CompletionPayment>>(payments));
+            // return aggregated completion payment events
             return completionPaymentEvents;
         }
     }
