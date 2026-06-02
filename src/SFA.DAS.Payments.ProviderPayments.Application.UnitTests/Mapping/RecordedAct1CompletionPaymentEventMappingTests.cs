@@ -68,6 +68,9 @@ namespace SFA.DAS.Payments.ProviderPayments.Application.UnitTests.Mapping
                 ApprenticeshipEmployerType = ApprenticeshipEmployerType.Levy,
                 ReportingAimFundingLineType = "ReportingAimFundingLineType",
                 ContractType = ContractType.Act1,
+                CourseType = CourseType.Apprenticeship,
+                LearningType = LearningType.Apprenticeship,
+                CourseCode = "123456"
 
             };
 
@@ -78,6 +81,9 @@ namespace SFA.DAS.Payments.ProviderPayments.Application.UnitTests.Mapping
             payment.Ukprn.Should().Be(paymentModel.Ukprn);
             payment.DeliveryPeriod.Should().Be(paymentModel.DeliveryPeriod);
             payment.CollectionPeriod.Period.Should().Be(paymentModel.CollectionPeriod.Period);
+            payment.CourseType.Should().Be(paymentModel.CourseType);
+            payment.LearningType.Should().Be(paymentModel.LearningType);
+            payment.CourseCode.Should().Be(paymentModel.CourseCode);
             payment.CollectionPeriod.AcademicYear.Should().Be(paymentModel.CollectionPeriod.AcademicYear);
             payment.Learner.Uln.Should().Be(paymentModel.LearnerUln);
             payment.Learner.ReferenceNumber.Should().Be(paymentModel.LearnerReferenceNumber);
