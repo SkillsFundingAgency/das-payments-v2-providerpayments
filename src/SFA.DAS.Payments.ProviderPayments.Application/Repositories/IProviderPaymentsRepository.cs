@@ -11,8 +11,14 @@ namespace SFA.DAS.Payments.ProviderPayments.Application.Repositories
     public interface IProviderPaymentsRepository
     {
         Task SavePayment(PaymentModel paymentData, CancellationToken cancellationToken = default(CancellationToken));
+
+        Task<List<PaymentModel>> GetPayments(String courseCode, short academicYear, byte period, long ukprn, long uln, string learningAimReference,
+            CancellationToken cancellationToken = default(CancellationToken));
+
         Task<List<PaymentModel>> GetMonthEndPayments(CollectionPeriod collectionPeriod, long ukprn,
             CancellationToken cancellationToken = default(CancellationToken));
+
+        Task DeletePayment(PaymentModel paymentData, CancellationToken cancellationToken = default(CancellationToken));
 
         Task DeleteOldMonthEndPayment(CollectionPeriod collectionPeriod,
             long ukprn,

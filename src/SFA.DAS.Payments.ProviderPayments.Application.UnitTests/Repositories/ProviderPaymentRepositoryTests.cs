@@ -31,6 +31,82 @@ namespace SFA.DAS.Payments.ProviderPayments.Application.UnitTests.Repositories
         }
 
         [Test]
+        public async Task GetPayments_returns_correct_payments()
+        {
+            var payments = CreateTestPayment();
+            context.Payment.AddRange(payments);
+            await context.SaveChanges();
+
+            var result = await sut.GetPayments(
+                courseCode: "CS101",
+                academicYear: 1920,
+                period: 1,
+                ukprn: 12345,
+                uln: 123456,
+                learningAimReference: "1234567-aim-ref");
+
+            result.Should().NotBeNullOrEmpty();
+            result.Should().HaveCount(3);
+            result.Should().OnlyContain(p =>
+                p.Ukprn == 12345 &&
+                p.CollectionPeriod.AcademicYear == 1920 &&
+                p.CollectionPeriod.Period == 1 &&
+                p.LearnerUln == 123456 &&
+                p.LearningAimReference == "1234567-aim-ref");
+        }
+
+
+        [Test]
+        public async Task GetPayments_returns_nothing_when_no_payments_match_criteria()
+        {
+            var payments = CreateTestPayment();
+            context.Payment.AddRange(payments);
+            await context.SaveChanges();
+
+            var result = await sut.GetPayments(
+                courseCode: "CS101",
+                academicYear: 2021,
+                period: 5,
+                ukprn: 99999,
+                uln: 123456,
+                learningAimReference: "1234567-aim-ref");
+
+            result.Should().BeEmpty();
+        }
+
+        [Test]
+        public async Task DeletePayment_removes_payment_from_data_context()
+        {
+            var payments = CreateTestPayment();
+            context.Payment.AddRange(payments);
+            await context.SaveChanges();
+
+            var paymentToDelete = payments[0]; //arbitrarily selected for the purpose of this test
+            await sut.DeletePayment(paymentToDelete);
+
+            context.Payment.Should().NotContain(p => p.EventId == paymentToDelete.EventId);
+        }
+
+        [Test]
+        public async Task DeletePayment_only_removes_the_specified_payment()
+        {
+            var payments = CreateTestPayment();
+            context.Payment.AddRange(payments);
+            await context.SaveChanges();
+
+            var paymentToDelete = payments[0];
+
+            var paymentsToPreserve = payments.Skip(1).Select(p => p.EventId).ToList();
+
+            await sut.DeletePayment(paymentToDelete);
+
+            foreach (var id in paymentsToPreserve)
+            {
+                context.Payment.Should().Contain(p => p.EventId == id);
+            }
+        }
+
+        [Test]
         public async Task GetMonthEndAct1CompletionPayments_Returns_all_Act1_Completion_Payments()
         {
             var payments = CreateTestPayment();
@@ -62,7 +138,7 @@ namespace SFA.DAS.Payments.ProviderPayments.Application.UnitTests.Repositories
         }
 
         [Test]
-        public async Task LearningTypeCourseCodeCourseTypeArePopulated()
+        public async Task When_Payment_Is_Created_LearningType_CourseCode_CourseType_Are_Retrieved()
         {
             var payments = CreateTestPayment();
 
@@ -77,8 +153,56 @@ namespace SFA.DAS.Payments.ProviderPayments.Application.UnitTests.Repositories
             result.FirstOrDefault().CourseType.Should().Be(CourseType.ShortCourse);
         }
 
+        [Test]
+        public async Task DeleteOldMonthEndPayment_DoesNotDeletePaymentsWithDasFundingPlatformType()
+        {
+            var payments = CreateTestPayment();
+
+            payments[0].FundingPlatformType = FundingPlatformType.DigitalApprenticeshipService;
+            payments[1].FundingPlatformType = FundingPlatformType.SubmitLearnerData;
+            payments[2].FundingPlatformType = FundingPlatformType.SubmitLearnerData;
+            payments[3].FundingPlatformType = null;
+
+            context.Payment.AddRange(payments);
+            await context.SaveChanges();
+
+            var collectionPeriod = new CollectionPeriod { Period = 1, AcademicYear = 1920 };
+            await sut.DeleteOldMonthEndPayment(collectionPeriod, ukprn: 12345,
+                currentIlrSubmissionDateTime: payments[0].IlrSubmissionDateTime.Value.AddHours(1));
+
+            var remainingPayments = await sut.GetMonthEndPayments(collectionPeriod, ukprn: 12345);
+
+            remainingPayments.Count.Should().Be(1);
+            remainingPayments[0].FundingPlatformType.Should().Be(FundingPlatformType.DigitalApprenticeshipService);
+        }
+
+        [Test]
+        public async Task DeleteCurrentMonthEndPayment_DoesNotDeletePaymentsWithDasFundingPlatformType()
+        {
+            var payments = CreateTestPayment();
+
+            payments[0].FundingPlatformType = FundingPlatformType.DigitalApprenticeshipService;
+            payments[1].FundingPlatformType = FundingPlatformType.SubmitLearnerData;
+            payments[2].FundingPlatformType = FundingPlatformType.SubmitLearnerData;
+            payments[3].FundingPlatformType = null;
+
+            context.Payment.AddRange(payments);
+            await context.SaveChanges();
+
+            var collectionPeriod = new CollectionPeriod { Period = 1, AcademicYear = 1920 }; 
+            await sut.DeleteCurrentMonthEndPayment(collectionPeriod, ukprn: 12345,
+                currentIlrSubmissionDateTime: payments[0].IlrSubmissionDateTime.Value);
+
+            var remainingPayments = await sut.GetMonthEndPayments(collectionPeriod, ukprn: 12345);
+
+            remainingPayments.Count.Should().Be(1);
+            remainingPayments[0].FundingPlatformType.Should().Be(FundingPlatformType.DigitalApprenticeshipService);
+        }
+
         private IList<PaymentModel> CreateTestPayment()
         {
+            var ilrSubmissionDateTime = DateTime.UtcNow;
+
             return new List<PaymentModel>
             {
                 new PaymentModel
@@ -98,7 +222,7 @@ namespace SFA.DAS.Payments.ProviderPayments.Application.UnitTests.Repositories
                     LearningAimStandardCode = 1209,
                     LearningAimProgrammeType = 7890,
                     LearningAimReference = "1234567-aim-ref",
-                    IlrSubmissionDateTime = DateTime.UtcNow,
+                    IlrSubmissionDateTime = ilrSubmissionDateTime,
                     TransactionType = TransactionType.Completion,
                     SfaContributionPercentage = 0.9m,
                     FundingSource = FundingSourceType.CoInvestedEmployer,
@@ -137,7 +261,7 @@ namespace SFA.DAS.Payments.ProviderPayments.Application.UnitTests.Repositories
                     LearningAimStandardCode = 1209,
                     LearningAimProgrammeType = 7890,
                     LearningAimReference = "1234567-aim-ref",
-                    IlrSubmissionDateTime = DateTime.UtcNow,
+                    IlrSubmissionDateTime = ilrSubmissionDateTime,
                     TransactionType = TransactionType.Completion,
                     SfaContributionPercentage = 0.9m,
                     FundingSource = FundingSourceType.CoInvestedEmployer,
@@ -176,7 +300,7 @@ namespace SFA.DAS.Payments.ProviderPayments.Application.UnitTests.Repositories
                     LearningAimStandardCode = 1209,
                     LearningAimProgrammeType = 7890,
                     LearningAimReference = "1234567-aim-ref",
-                    IlrSubmissionDateTime = DateTime.UtcNow,
+                    IlrSubmissionDateTime = ilrSubmissionDateTime,
                     TransactionType = TransactionType.Completion,
                     SfaContributionPercentage = 0.9m,
                     FundingSource = FundingSourceType.CoInvestedEmployer,
@@ -215,7 +339,7 @@ namespace SFA.DAS.Payments.ProviderPayments.Application.UnitTests.Repositories
                     LearningAimStandardCode = 1209,
                     LearningAimProgrammeType = 7890,
                     LearningAimReference = "1234567-aim-ref",
-                    IlrSubmissionDateTime = DateTime.UtcNow,
+                    IlrSubmissionDateTime = ilrSubmissionDateTime,
                     TransactionType = TransactionType.Balancing,
                     SfaContributionPercentage = 0.9m,
                     FundingSource = FundingSourceType.CoInvestedEmployer,

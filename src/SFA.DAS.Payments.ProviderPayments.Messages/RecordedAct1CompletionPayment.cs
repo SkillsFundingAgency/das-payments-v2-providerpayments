@@ -27,6 +27,9 @@ namespace SFA.DAS.Payments.ProviderPayments.Messages
         public string ReportingAimFundingLineType { get; set; }
         public FundingSourceType FundingSource { get; set; }
         public EarningDetails EarningDetails { get; set; }
+        public CourseType CourseType { get; set; }
+        public LearningType LearningType { get; set; }
+        public string CourseCode { get; set; }
     }
 
     public class EarningDetails
