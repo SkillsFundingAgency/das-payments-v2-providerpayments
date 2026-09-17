@@ -53,8 +53,6 @@ namespace SFA.DAS.Payments.ProviderPayments.Specs.StepDefinitions
             testSession.DataContext.CollectionPeriods.Add(new CollectionPeriodModel
             {
                 AcademicYear = testSession.CurrentPeriod.AcademicYear,
-                CalendarMonth = (byte)DateTime.Today.Month,
-                CalendarYear = (byte)DateTime.Today.Year,
                 CompletionDate = DateTime.Today,
                 EndDateTime = null,
                 Period = testSession.CurrentPeriod.Period,
