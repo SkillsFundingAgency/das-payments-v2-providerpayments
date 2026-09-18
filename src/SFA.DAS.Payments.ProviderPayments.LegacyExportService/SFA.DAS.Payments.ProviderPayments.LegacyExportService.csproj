@@ -10,6 +10,7 @@
     <ServicePackagePath>PackageRoot</ServicePackagePath>
     <ServicePackagePrefix>$(MSBuildProjectName)</ServicePackagePrefix>
     <FabActUtilWorkingDir>$(BaseIntermediateOutputPath)\FabActUtilTemp</FabActUtilWorkingDir>
+	<SelfContained>True</SelfContained>
   </PropertyGroup>
 
  
