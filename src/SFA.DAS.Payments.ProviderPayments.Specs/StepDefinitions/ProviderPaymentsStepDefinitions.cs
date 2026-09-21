@@ -3,6 +3,7 @@ using Bogus.DataSets;
 using Microsoft.EntityFrameworkCore;
 using NUnit.Framework.Interfaces;
 using Reqnroll;
+using SFA.DAS.Payments.FundingSource.Messages.Events;
 using SFA.DAS.Payments.ProviderPayments.Specs.Handlers;
 using SFA.DAS.Payments.ProviderPayments.Specs.StepDefinitions;
 using SFA.DAS.Payments.Model.Core;
@@ -35,6 +36,7 @@ namespace SFA.DAS.Payments.ProviderPayments.Specs.StepDefinitions
         [BeforeScenario]
         public async Task BeforeScenario()
         {
+            transactionType = TransactionType.Learning;
             testSession = new TestSession();
             await testSession.DataContext.ClearCollectionPeriodsData();
             SetCurrentCollectionYear();
@@ -394,6 +396,62 @@ namespace SFA.DAS.Payments.ProviderPayments.Specs.StepDefinitions
         [When("Provider Payments processes the event")]
         public async Task WhenProviderPaymentsProcessesTheEvent()
         {
+            var fundingSourceEvent = IntialiseFundingSourcePaymentEvent();
+            Console.WriteLine(
+                $"Sending the FundingSource event for ExternalEarningsId: {externalEarningsId}, EventId: {fundingSourceEvent.EventId}");
+
+            await testSession.Pv2MessageContext.Send(fundingSourceEvent);
+        }
+
+        [Then("the Payments table stores the ExternalEarningsId")]
+        public async Task ThenThePaymentsTableStoresTheExternalEarningsId()
+        {
+            await testSession.WaitForIt(async () =>
+            {
+                var foundPayment = await testSession.DataContext.Payment.AnyAsync(payment =>
+                    payment.LearnerUln == testSession.Learner.Uln &&
+                    payment.JobId == testSession.JobId &&
+                    payment.CourseCode == testSession.Learner.Course.CourseCode &&
+                    payment.CourseType == testSession.Learner.Course.CourseType &&
+                    payment.LearningType == testSession.Learner.Course.LearningType &&
+                    payment.EarningEventId == testSession.CurrentEarningsId &&
+                    payment.ExternalEarningsId == externalEarningsId &&
+                    payment.CollectionPeriod.Period == testSession.CurrentPeriod.Period &&
+                    payment.CollectionPeriod.AcademicYear == testSession.CurrentPeriod.AcademicYear);
+
+                return foundPayment;
+            }, $"Expected ExternalEarningsId '{externalEarningsId}' to be stored in the Payments table");
+        }
+
+
+        [Given("a FundingSource event contains a null ExternalEarningsId")]
+        public void GivenAFundingSourceEventContainsANullExternalEarningsId()
+        {
+            externalEarningsId = null;
+        }
+
+        [Then("the Payments table stores a null ExternalEarningsId")]
+        public async Task ThenThePaymentsTableStoresANullExternalEarningsId()
+        {
+            await testSession.WaitForIt(async () =>
+                {
+                    var foundPayment = await testSession.DataContext.Payment.AnyAsync(payment =>
+                        payment.LearnerUln == testSession.Learner.Uln &&
+                        payment.JobId == testSession.JobId &&
+                        payment.CourseCode == testSession.Learner.Course.CourseCode &&
+                        payment.CourseType == testSession.Learner.Course.CourseType &&
+                        payment.LearningType == testSession.Learner.Course.LearningType &&
+                        payment.EarningEventId == testSession.CurrentEarningsId &&
+                        payment.ExternalEarningsId == null &&
+                        payment.CollectionPeriod.Period == testSession.CurrentPeriod.Period &&
+                        payment.CollectionPeriod.AcademicYear == testSession.CurrentPeriod.AcademicYear);
+
+                    return foundPayment;
+                }, $"Expected ExternalEarningsId '{externalEarningsId}' to be stored in the Payments table");
+        }
+
+        private LevyFundingSourcePaymentEvent IntialiseFundingSourcePaymentEvent()
+        {
             var fundingSourceEvent =
                 new SFA.DAS.Payments.FundingSource.Messages.Events.LevyFundingSourcePaymentEvent
                 {
@@ -447,31 +505,7 @@ namespace SFA.DAS.Payments.ProviderPayments.Specs.StepDefinitions
                     PriceEpisodeIdentifier = string.Empty,
                     IlrSubmissionDateTime = (DateTime)SqlDateTime.MinValue
                 };
-
-            Console.WriteLine(
-                $"Sending the FundingSource event for ExternalEarningsId: {externalEarningsId}, EventId: {fundingSourceEvent.EventId}");
-
-            await testSession.Pv2MessageContext.Send(fundingSourceEvent);
-        }
-
-        [Then("the Payments table stores the ExternalEarningsId")]
-        public async Task ThenThePaymentsTableStoresTheExternalEarningsId()
-        {
-            await testSession.WaitForIt(async () =>
-            {
-                var foundPayment = await testSession.DataContext.Payment.AnyAsync(payment =>
-                    payment.LearnerUln == testSession.Learner.Uln &&
-                    payment.JobId == testSession.JobId &&
-                    payment.CourseCode == testSession.Learner.Course.CourseCode &&
-                    payment.CourseType == testSession.Learner.Course.CourseType &&
-                    payment.LearningType == testSession.Learner.Course.LearningType &&
-                    payment.EarningEventId == testSession.CurrentEarningsId &&
-                    payment.ExternalEarningsId == externalEarningsId &&
-                    payment.CollectionPeriod.Period == testSession.CurrentPeriod.Period &&
-                    payment.CollectionPeriod.AcademicYear == testSession.CurrentPeriod.AcademicYear);
-
-                return foundPayment;
-            }, $"Expected ExternalEarningsId '{externalEarningsId}' to be stored in the Payments table");
+            return fundingSourceEvent;
         }
     }
 }
