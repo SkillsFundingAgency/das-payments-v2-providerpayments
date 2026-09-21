@@ -64,6 +64,7 @@ namespace SFA.DAS.Payments.ProviderPayments.Application.Mapping
                 .ForMember(dest => dest.CourseCode, opt => opt.MapFrom(source => source.LearningAim.CourseCode))
                 .ForMember(dest => dest.LearningType, opt => opt.MapFrom(source => source.LearningAim.LearningType == 0 ? LearningType.Apprenticeship : source.LearningAim.LearningType))
                 .ForMember(dest => dest.CourseType, opt => opt.MapFrom(source => ResolveCourseType(source.CourseType, source.LearningAim.LearningType)))
+                .ForMember(dest => dest.ExternalEarningsId, opt => opt.MapFrom(source => source.ExternalEarningsId))
                 ;
 
             CreateMap<EmployerCoInvestedFundingSourcePaymentEvent, ProviderPaymentEventModel>();

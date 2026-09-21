@@ -23,6 +23,7 @@ namespace SFA.DAS.Payments.ProviderPayments.Application.Data
                 new DataColumn("CourseType", typeof(byte)),
                 new DataColumn("LearningType", typeof(byte)),
                 new DataColumn("CourseCode", typeof(string)),
+                new DataColumn("ExternalEarningsId", typeof(Guid)),
             });
         }
 
@@ -86,6 +87,15 @@ namespace SFA.DAS.Payments.ProviderPayments.Application.Data
             dataRow["CourseType"] = eventModel.CourseType.HasValue ? (byte)eventModel.CourseType.Value : DBNull.Value;
             dataRow["LearningType"] = eventModel.LearningType.HasValue ? (byte)eventModel.LearningType.Value : DBNull.Value;
             dataRow["CourseCode"] = eventModel.CourseCode;
+
+            if (!eventModel.ExternalEarningsId.HasValue)
+            {
+                dataRow["ExternalEarningsId"] = DBNull.Value;
+            }
+            else
+            {
+                dataRow["ExternalEarningsId"] = eventModel.ExternalEarningsId.Value;
+            }
 
             return dataRow;
         }
