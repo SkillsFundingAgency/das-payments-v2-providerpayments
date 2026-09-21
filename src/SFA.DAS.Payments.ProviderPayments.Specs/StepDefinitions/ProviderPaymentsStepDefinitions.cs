@@ -20,6 +20,7 @@ namespace SFA.DAS.Payments.ProviderPayments.Specs.StepDefinitions
         private Guid previousIdentifier;
         private TransactionType transactionType;
         public List< PaymentModel> Payments { get; set; }
+        private Guid? externalEarningsId;
 
         public ProviderPaymentsStepDefinitions(ScenarioContext scenarioContext)
         {
@@ -384,5 +385,93 @@ namespace SFA.DAS.Payments.ProviderPayments.Specs.StepDefinitions
             }, "Failed to find the expected completion payment(s)");
         }
 
+        [Given("a FundingSource event contains an ExternalEarningsId")]
+        public void GivenAFundingSourceEventContainsAnExternalEarningsId()
+        {
+            externalEarningsId = Guid.NewGuid();
+        }
+
+        [When("Provider Payments processes the event")]
+        public async Task WhenProviderPaymentsProcessesTheEvent()
+        {
+            var fundingSourceEvent =
+                new SFA.DAS.Payments.FundingSource.Messages.Events.LevyFundingSourcePaymentEvent
+                {
+                    AgreementId = Guid.NewGuid().ToString("N"),
+                    Learner = new Learner
+                    {
+                        ReferenceNumber = testSession.Learner.LearnRefNumber,
+                        Uln = testSession.Learner.Uln
+                    },
+                    CourseType = testSession.Learner.Course.CourseType,
+                    AccountId = 1,
+                    ActualEndDate = null,
+                    AgeAtStartOfLearning = testSession.Learner.Age,
+                    AmountDue = 300,
+                    ApprenticeshipEmployerType = ApprenticeshipEmployerType.Levy,
+                    ApprenticeshipId = 1234567,
+                    CollectionPeriod = testSession.CurrentPeriod,
+                    CompletionAmount = 700,
+                    CompletionStatus = 1,
+                    ContractType = ContractType.Act1,
+                    DeliveryPeriod = 1,
+                    EarningEventId = testSession.CurrentEarningsId,
+                    ExternalEarningsId = externalEarningsId,
+                    EventId = Guid.NewGuid(),
+                    EventTime = DateTime.UtcNow,
+                    FundingPlatformType = FundingPlatformType.DigitalApprenticeshipService,
+                    FundingSourceType = FundingSourceType.Levy,
+                    InstalmentAmount = 300,
+                    JobId = testSession.JobId,
+                    LearningAim = new LearningAim
+                    {
+                        CourseCode = testSession.Learner.Course.CourseCode,
+                        LearningType = testSession.Learner.Course.LearningType,
+                        StandardCode = testSession.Learner.Course.StandardCode,
+                        FundingLineType = testSession.Learner.Course.FundingLineType,
+                        FrameworkCode = testSession.Learner.Course.FrameworkCode,
+                        PathwayCode = testSession.Learner.Course.PathwayCode,
+                        ProgrammeType = testSession.Learner.Course.ProgrammeType,
+                        Reference = testSession.Learner.Course.Reference,
+                        StartDate = DateTime.Today.AddMonths(-1)
+                    },
+                    StartDate = DateTime.Today.AddMonths(-1),
+                    LearningStartDate = DateTime.Today.AddMonths(-1),
+                    NumberOfInstalments = 1,
+                    PlannedEndDate = DateTime.Today.AddMonths(1),
+                    RequiredPaymentEventId = Guid.NewGuid(),
+                    TransactionType = transactionType,
+                    SfaContributionPercentage = .95m,
+                    TransferSenderAccountId = 0,
+                    Ukprn = testSession.Provider.Ukprn,
+                    PriceEpisodeIdentifier = string.Empty,
+                    IlrSubmissionDateTime = (DateTime)SqlDateTime.MinValue
+                };
+
+            Console.WriteLine(
+                $"Sending the FundingSource event for ExternalEarningsId: {externalEarningsId}, EventId: {fundingSourceEvent.EventId}");
+
+            await testSession.Pv2MessageContext.Send(fundingSourceEvent);
+        }
+
+        [Then("the Payments table stores the ExternalEarningsId")]
+        public async Task ThenThePaymentsTableStoresTheExternalEarningsId()
+        {
+            await testSession.WaitForIt(async () =>
+            {
+                var foundPayment = await testSession.DataContext.Payment.AnyAsync(payment =>
+                    payment.LearnerUln == testSession.Learner.Uln &&
+                    payment.JobId == testSession.JobId &&
+                    payment.CourseCode == testSession.Learner.Course.CourseCode &&
+                    payment.CourseType == testSession.Learner.Course.CourseType &&
+                    payment.LearningType == testSession.Learner.Course.LearningType &&
+                    payment.EarningEventId == testSession.CurrentEarningsId &&
+                    payment.ExternalEarningsId == externalEarningsId &&
+                    payment.CollectionPeriod.Period == testSession.CurrentPeriod.Period &&
+                    payment.CollectionPeriod.AcademicYear == testSession.CurrentPeriod.AcademicYear);
+
+                return foundPayment;
+            }, $"Expected ExternalEarningsId '{externalEarningsId}' to be stored in the Payments table");
+        }
     }
 }
