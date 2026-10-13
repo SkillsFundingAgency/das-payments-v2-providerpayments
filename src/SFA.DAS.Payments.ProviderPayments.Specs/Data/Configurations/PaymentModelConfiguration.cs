@@ -59,5 +59,6 @@ public class PaymentModelConfiguration : IEntityTypeConfiguration<PaymentModel>
         builder.Property(x => x.LearningAimSequenceNumber).HasColumnName(@"LearningAimSequenceNumber");
         builder.Property(x => x.AgeAtStartOfLearning).HasColumnName(@"AgeAtStartOfLearning");
         builder.Property(x => x.FundingPlatformType).HasColumnName(@"FundingPlatformType");
+        builder.Property(x => x.ExternalEarningsId).HasColumnName(@"ExternalEarningsId");
     }
 }

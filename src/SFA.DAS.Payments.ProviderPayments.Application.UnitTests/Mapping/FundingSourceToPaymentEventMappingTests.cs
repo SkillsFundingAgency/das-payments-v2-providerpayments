@@ -436,7 +436,8 @@ namespace SFA.DAS.Payments.ProviderPayments.Application.UnitTests.Mapping
                 NumberOfInstalments = 5,
                 CourseType = CourseType.Apprenticeship,
                 CourseCode = "123456",
-                LearningType = LearningType.Apprenticeship
+                LearningType = LearningType.Apprenticeship,
+                ExternalEarningsId = Guid.NewGuid()
             };
 
             var providerPayment = Activator.CreateInstance(providerPaymentEventType) as ProviderPaymentEvent;
@@ -453,6 +454,7 @@ namespace SFA.DAS.Payments.ProviderPayments.Application.UnitTests.Mapping
             providerPayment.CourseType.Should().Be(providerPaymentEvent.CourseType);
             providerPayment.LearningAim.CourseCode.Should().Be(providerPaymentEvent.CourseCode);
             providerPayment.LearningAim.LearningType.Should().Be(providerPaymentEvent.LearningType);
+            providerPayment.ExternalEarningsId.Should().Be(providerPaymentEvent.ExternalEarningsId);
         }
 
 
