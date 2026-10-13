@@ -135,7 +135,8 @@ namespace SFA.DAS.Payments.ProviderPayments.Application.Mapping
                 .Include<TransferFundingSourcePaymentEvent, TransferProviderPaymentEvent>()
                 .ForMember(dest => dest.EventId, opt => opt.Ignore())
                 .ForMember(dest => dest.CourseCode, opt => opt.MapFrom(source => source.LearningAim.CourseCode))
-                .ForMember(dest => dest.LearningType, opt => opt.MapFrom(source => source.LearningAim.LearningType));
+                .ForMember(dest => dest.LearningType, opt => opt.MapFrom(source => source.LearningAim.LearningType))
+                .ForMember(dest => dest.ExternalEarningsId, opt => opt.MapFrom(source => source.ExternalEarningsId));
 
             CreateMap<EmployerCoInvestedFundingSourcePaymentEvent, EmployerCoInvestedProviderPaymentEvent>();
             CreateMap<SfaCoInvestedFundingSourcePaymentEvent, SfaCoInvestedProviderPaymentEvent>();
