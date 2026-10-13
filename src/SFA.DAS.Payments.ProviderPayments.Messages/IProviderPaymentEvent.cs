@@ -1,4 +1,5 @@
-﻿using SFA.DAS.Payments.Messages.Common.Events;
+﻿using System;
+using SFA.DAS.Payments.Messages.Common.Events;
 using SFA.DAS.Payments.Model.Core.Entities;
 
 namespace SFA.DAS.Payments.ProviderPayments.Messages
@@ -11,5 +12,6 @@ namespace SFA.DAS.Payments.ProviderPayments.Messages
         CourseType? CourseType { get; set; }
         LearningType? LearningType { get; set; }
         string CourseCode { get; set; }
+        Guid? ExternalEarningsId { get; set; }
     }
 }

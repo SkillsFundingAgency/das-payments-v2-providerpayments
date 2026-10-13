@@ -23,5 +23,6 @@ namespace SFA.DAS.Payments.ProviderPayments.Messages
         public CourseType? CourseType { get; set; }
         public LearningType? LearningType { get; set; }
         public string CourseCode { get; set; }
+        public Guid? ExternalEarningsId { get; set; }
     }
 }
