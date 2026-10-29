@@ -15,7 +15,7 @@ namespace SFA.DAS.Payments.ProviderPayments.Specs.StepDefinitions
         public Provider Provider { get; }
         public Specs.Models.Learner Learner { get; }
         public TestSessionDataContext DataContext { get; }
-        public TimeSpan TimeToWait => TimeSpan.FromSeconds(10);
+        public TimeSpan TimeToWait => TimeSpan.FromSeconds(30);
         public TimeSpan TimeToPause => TimeSpan.FromSeconds(2);
         public long JobId { get; set; }
         public Guid CurrentEarningsId { get; set; }

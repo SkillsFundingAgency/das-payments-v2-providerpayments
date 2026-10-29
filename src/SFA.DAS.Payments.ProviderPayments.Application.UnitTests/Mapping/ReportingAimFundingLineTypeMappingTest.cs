@@ -69,5 +69,43 @@ namespace SFA.DAS.Payments.ProviderPayments.Application.UnitTests.Mapping
 
             providerPayment.ReportingAimFundingLineType.Should().Be(fundingLineType);
         }
+
+        [Test]
+        [TestCase((CourseType)0, ApprenticeshipEmployerType.NonLevy, "GSO Short Courses (Apprenticeship Units) Non-Levy")]
+        [TestCase((CourseType)0, ApprenticeshipEmployerType.Levy, "GSO Short Courses (Apprenticeship Units) Levy")]
+        [TestCase(CourseType.Apprenticeship, ApprenticeshipEmployerType.NonLevy, "GSO Short Courses (Apprenticeship Units) Non-Levy")]
+        [TestCase(CourseType.Apprenticeship, ApprenticeshipEmployerType.Levy, "GSO Short Courses (Apprenticeship Units) Levy")]
+        [TestCase(CourseType.ShortCourse, ApprenticeshipEmployerType.NonLevy, "GSO Short Courses (Apprenticeship Units) Non-Levy")]
+        [TestCase(CourseType.ShortCourse, ApprenticeshipEmployerType.Levy, "GSO Short Courses (Apprenticeship Units) Levy")]
+        public void ShouldSetReportingAimFundingLineTypeToFundingLineTypeIfApprenticeshipUnitRegardlessOfCourseType(CourseType courseType, ApprenticeshipEmployerType employerType, string fundingLineType)
+        {
+            var fundingSourceEvent = new SfaCoInvestedFundingSourcePaymentEvent
+            {
+                ContractType = ContractType.Act1,
+                ApprenticeshipEmployerType = employerType,
+                CourseType = courseType,
+                LearningAim = new LearningAim { FundingLineType = fundingLineType, LearningType = LearningType.ApprenticeshipUnit }
+            };
+
+            var providerPayment = mapper.Map<ProviderPaymentEventModel>(fundingSourceEvent);
+
+            providerPayment.ReportingAimFundingLineType.Should().Be(fundingLineType);
+        }
+
+        [Test]
+        public void ShouldNotPassThroughShortCourseFundingLineTypeForNonApprenticeshipUnitLearning()
+        {
+            var fundingSourceEvent = new SfaCoInvestedFundingSourcePaymentEvent
+            {
+                ContractType = ContractType.Act1,
+                ApprenticeshipEmployerType = ApprenticeshipEmployerType.NonLevy,
+                CourseType = (CourseType)0,
+                LearningAim = new LearningAim { FundingLineType = "GSO Short Courses (Apprenticeship Units) Non-Levy", LearningType = LearningType.Apprenticeship }
+            };
+
+            var providerPayment = mapper.Map<ProviderPaymentEventModel>(fundingSourceEvent);
+
+            providerPayment.ReportingAimFundingLineType.Should().StartWith("None");
+        }
     }
 }
