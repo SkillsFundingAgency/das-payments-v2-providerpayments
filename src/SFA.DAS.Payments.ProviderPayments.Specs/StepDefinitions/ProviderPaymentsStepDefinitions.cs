@@ -12,7 +12,7 @@ using Database = UUIDNext.Database;
 namespace SFA.DAS.Payments.ProviderPayments.Specs.StepDefinitions
 {
     [Binding]
-    public class ProviderPaymentsStepDefinitions
+    public partial class ProviderPaymentsStepDefinitions
     {
         private readonly ScenarioContext scenarioContext;
         private readonly MessagingContext messagingContext;
@@ -262,62 +262,20 @@ namespace SFA.DAS.Payments.ProviderPayments.Specs.StepDefinitions
         [When("there is a change to the earnings and a new set of earnings have been received")]
         public async Task WhenThereIsAChangeToTheEarningsAndANewSetOfEarningsHaveBeenReceived()
         {
-            var fundingSourceEvent = new SFA.DAS.Payments.FundingSource.Messages.Events.LevyFundingSourcePaymentEvent
+            var dasEarningsReceivedEvent = new SFA.DAS.Payments.EarningEvents.Messages.Events.DasEarningsReceivedEvent
             {
-                AgreementId = Guid.NewGuid().ToString("N"),
-                Learner = new Learner
-                {
-                    ReferenceNumber = testSession.Learner.LearnRefNumber,
-                    Uln = testSession.Learner.Uln
-                },
-                CourseType = testSession.Learner.Course.CourseType,
-                AccountId = 1,
-                ActualEndDate = testSession.Learner.Course.LearningStartDate.AddMonths(1),
-                AgeAtStartOfLearning = testSession.Learner.Age,
-                AmountDue = 700,
-                ApprenticeshipEmployerType = ApprenticeshipEmployerType.Levy,
-                ApprenticeshipId = 1234567,
+                EarningsId = testSession.CurrentEarningsId,
+                CourseCode = testSession.Learner.Course.CourseCode,
                 CollectionPeriod = testSession.CurrentPeriod,
-                CompletionAmount = 700,
-                CompletionStatus = 2,
-                ContractType = ContractType.Act1,
-                DeliveryPeriod = 1,
-                EarningEventId = testSession.CurrentEarningsId,
-                EventId = Guid.NewGuid(),
-                EventTime = DateTime.UtcNow,
-                FundingPlatformType = FundingPlatformType.DigitalApprenticeshipService,
-                FundingSourceType = FundingSourceType.Levy,
-                InstalmentAmount = 300,
-                JobId = testSession.JobId,
-                LearningAim = new LearningAim
-                {
-                    CourseCode = testSession.Learner.Course.CourseCode,
-                    LearningType = testSession.Learner.Course.LearningType,
-                    StandardCode = testSession.Learner.Course.StandardCode,
-                    FundingLineType = testSession.Learner.Course.FundingLineType,
-                    FrameworkCode = testSession.Learner.Course.FrameworkCode,
-                    PathwayCode = testSession.Learner.Course.PathwayCode,
-                    ProgrammeType = testSession.Learner.Course.ProgrammeType,
-                    Reference = testSession.Learner.Course.Reference,
-                    StartDate = DateTime.Today.AddMonths(-1)
-                },
-                StartDate = DateTime.Today.AddMonths(-1),
-                LearningStartDate = DateTime.Today.AddMonths(-1),
-                NumberOfInstalments = 1,
-                PlannedEndDate = DateTime.Today.AddMonths(1),
-                RequiredPaymentEventId = Guid.NewGuid(),
-                TransactionType = transactionType,
-                SfaContributionPercentage = .95m,
-                TransferSenderAccountId = 0,
-                Ukprn = testSession.Provider.Ukprn,
-                PriceEpisodeIdentifier = string.Empty,
-                IlrSubmissionDateTime = (DateTime)SqlDateTime.MinValue
+                ULN = testSession.Learner.Uln,
+                UKPRN = testSession.Provider.Ukprn,
+                LearningAimReference = testSession.Learner.Course.LearnAimRef
             };
-            Console.WriteLine($"Sending the funding source event for the milestone payment.  Event: {fundingSourceEvent.EventId}");
-            await testSession.Pv2MessageContext.Send(fundingSourceEvent);
+            Console.WriteLine($"Sending the DAS earnings received event.  Earnings Id: {dasEarningsReceivedEvent.EarningsId}");
+            await testSession.Pv2MessageContext.Send(dasEarningsReceivedEvent);
         }
 
-        [Then("the payments generated for the previous earnings should be reversed")]
+[Then("the payments generated for the previous earnings should be reversed")]
         public async Task ThenThePaymentsGeneratedForThePreviousEarningsShouldBeReversed()
         {
             await testSession.WaitForIt(async () =>
